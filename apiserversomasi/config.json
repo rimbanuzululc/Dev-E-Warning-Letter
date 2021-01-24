@@ -1,0 +1,56 @@
+{
+    "mainVerticle" : "com.sli.somasi.apiserver.APIVerticle",
+    "display" : "Commerce API Server",
+    "ecommerce": {
+
+        "restapi" : {
+            
+            "port" : 8080,
+            "allowedURL" :{
+                                "ALL" : [   
+                                            "/*.html$",
+                                            "/*/lib/",
+                                            "/*/img/",
+                                            "/*/css/",
+                                            "/*.html$",
+                                            "/*/lib/*",
+                                            "/*/img/*",
+                                            "/*/css/*",
+                                            "/user/test$",
+                                            "/*/user/login",
+                                            "/*/konsumen/*",
+                                            "/*/sli/",
+                                            "/*/upload/*",
+                                            "/*/agentpos/*",
+                                            "/*/mapping/*",
+                                            "/*/status/*",
+                                            "/*/img/*",
+                                            "/*/wilayah/*"
+                                        ],
+                                "GET" : [
+                                          "/",
+                                          "/menu/*",
+                                          "/role/*",
+                                          "/user/*"
+                                        ],
+                                "POST" : [
+                                            "/menu/*",
+                                            "/role/*",
+                                            "/user/*"
+                                        ], 
+                                "PUT" : [
+                                            "/menu/*",
+                                            "/role/*",
+                                            "/user/*"  
+                                        ], 
+                                "DELETE" : [
+                                             "/role/*",
+                                          "/user/*",
+                                          "/menu/*"
+                                        ]
+                            }
+        }
+    },
+    
+    "uploadDirectory" : "/home/somasi/excelFile"
+}

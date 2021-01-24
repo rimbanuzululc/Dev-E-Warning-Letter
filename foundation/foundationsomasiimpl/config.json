@@ -1,0 +1,21 @@
+{
+    "mainVerticle" : "com.sli.somasi.foundation.FoundationVerticle",
+        "dbs": {
+        "url"           : "jdbc:postgresql://localhost:5432/dancons",
+        "driver_class"  : "org.postgresql.Driver",
+        "user"          : "postgres",
+        "password"      : "somasi"
+    },
+        "dbs": {
+        "url"           : "jdbc:postgresql://localhost:5432/somasi",
+        "driver_class"  : "org.postgresql.Driver",
+        "user"          : "postgres",
+        "password"      : "admin123"
+    },
+        "db": {
+        "url"           : "jdbc:postgresql://localhost:5432/warning_letter",
+        "driver_class"  : "org.postgresql.Driver",
+        "user"          : "postgres",
+        "password"      : "admin123"
+    }
+}
