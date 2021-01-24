@@ -10,6 +10,8 @@ import com.sli.somasi.foundation.service.UserService;
 import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.Future;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -57,6 +59,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public Future<User> update(User user) {
         
+        String password = user.getPassword();
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes(),0,password.length());
+            
+            String encoded = new BigInteger(1,digest.digest()).toString(16);
+            user.setPassword(encoded);
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -80,6 +94,13 @@ public class UserServiceImpl implements UserService {
     public Future<User> login(String userId, String password) {
         
         Future<User> result = Future.future();
+        User user = new User();
+         try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes(),0,password.length());
+            
+            String encoded = new BigInteger(1,digest.digest()).toString(16);
+            user.setPassword(encoded);
         
         dao.getById(userId)
             .setHandler(ret -> {
@@ -89,7 +110,7 @@ public class UserServiceImpl implements UserService {
                     
                     System.out.println("Password : "+password);
                     System.out.println("Password DB : "+ret.result().getPassword());
-                    if (ret.result().getPassword().equals(password) && ret.result().getIsActive() == true) {
+                    if (ret.result().getPassword().equals(user.getPassword()) && ret.result().getIsActive() == true) {
                         
                         result.complete(ret.result());
                     } 
@@ -99,6 +120,12 @@ public class UserServiceImpl implements UserService {
                 else
                     result.fail(new CodedException(Errors.LOGIN_USER_NOT_FOUND));
             });
+        
+        } catch(Exception e){
+            System.out.println("Error login exception : " + e.getMessage());
+            e.printStackTrace(System.out);
+            result.fail(new CodedException(Errors.COMMON));
+        }
         
         return result;
     }
