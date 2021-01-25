@@ -38,7 +38,7 @@ public class AssignFinance {
     protected Boolean print;
     protected String assignStatus;
     protected Integer otp;
-    protected Integer noDebitur;
+    protected String noDebitur;
     
     
     public Integer getIdAssignFinance() {
@@ -137,11 +137,11 @@ public class AssignFinance {
         this.otp = otp;
     }
 
-    public Integer getNoDebitur() {
+    public String getNoDebitur() {
         return noDebitur;
     }
 
-    public void setNoDebitur(Integer noDebitur) {
+    public void setNoDebitur(String noDebitur) {
         this.noDebitur = noDebitur;
     }
     
