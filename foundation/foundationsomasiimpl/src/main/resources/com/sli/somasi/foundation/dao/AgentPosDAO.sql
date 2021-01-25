@@ -32,3 +32,6 @@ where
 
 --search
 select * from somasi_agentpos where districtid = {{districtid}}
+
+--validOtp
+select * from somasi_otp so where nodebitur = {{no}} and idagentpos = {{id}}

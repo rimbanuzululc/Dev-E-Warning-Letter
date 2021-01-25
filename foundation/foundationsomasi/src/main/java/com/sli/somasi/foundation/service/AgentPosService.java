@@ -8,7 +8,9 @@ package com.sli.somasi.foundation.service;
 import com.sli.somasi.foundation.dto.AgentPos;
 import com.sli.somasi.foundation.dto.Assign;
 import com.sli.somasi.foundation.dto.Konsumen;
+import com.sli.somasi.foundation.dto.OTP;
 import com.sli.somasi.foundation.dto.UpdatePassword;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import io.vertx.core.Future;
 import java.util.List;
 import java.util.Map;
@@ -33,5 +35,9 @@ public interface AgentPosService {
     Future<List<AgentPos>> search (int id);
     
     Future<AgentPos> edit (AgentPos agentPos);
+    
+    Future<OTP> sendOTP (OTP otp);
+    
+    Future<Boolean> validateOTP (OTP otp);
     
 }

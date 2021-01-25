@@ -10,6 +10,7 @@ import com.sli.somasi.foundation.CodedException;
 import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.AssignDTO;
 import com.sli.somasi.foundation.dto.AgentPos;
+import com.sli.somasi.foundation.dto.OTP;
 import com.sli.somasi.foundation.service.AgentPosService;
 import io.starlight.AutoWired;
 import io.starlight.http.QueryParam;
@@ -228,4 +229,51 @@ public class AgentPosController {
         return result;
     }
     
+    @RequestMapping(value = "/otp", method = HttpMethod.POST)
+    public Future<APIResult> otp (@RequestBody OTP otp) {
+        
+        Future<APIResult> result = Future.future();
+        
+        service.sendOTP(otp)
+                .setHandler(ret -> {
+                    
+                    APIResult aPIResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        
+                        aPIResult.setResult(ret.result());
+                        
+                    } else {
+                        aPIResult.setErrorMsg("Failed to send otp!");
+                    }
+                    
+                    result.complete(aPIResult);
+                    
+                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/validate/otp", method = HttpMethod.POST)
+    public Future<APIResult> ValidateOtp (@RequestBody OTP otp) {
+        
+        Future<APIResult> result = Future.future();
+        
+        service.validateOTP(otp)
+                .setHandler(ret -> {
+                    
+                    APIResult aPIResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        
+                        aPIResult.setResult(ret.result());
+                        
+                    } else {
+                        aPIResult.setErrorMsg("Failed to send otp!");
+                    }
+                    
+                    result.complete(aPIResult);
+                    
+                });
+        return result;
+    }
 }

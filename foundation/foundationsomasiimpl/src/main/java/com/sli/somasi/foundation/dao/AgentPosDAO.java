@@ -14,6 +14,7 @@ import com.sli.somasi.foundation.dto.Konsumen;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.Setting;
 import com.sli.somasi.foundation.dto.MappingAreaAgentKaPos;
+import com.sli.somasi.foundation.dto.OTP;
 import io.starlight.AutoWired;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
@@ -256,4 +257,64 @@ public class AgentPosDAO extends CommonDAO {
                 });
         return result;
     }
+    
+    public Future<OTP> sendOtp (OTP otp) {
+        
+        Future<OTP> result = Future.future();
+        
+        queryScriptWihtParam("validOtp", OTP.class, "id", otp.getIdAgentpos(), "no", otp.getNoDebitur())
+                .setHandler(ret ->{
+                    
+                    if (ret.result() == null || ret.result().isEmpty()) {
+                        insert(otp)
+                            .setHandler(ret3 -> {
+
+                                if (ret3.succeeded())
+                                    result.complete(ret3.result());
+                                else
+                                    result.fail(ret3.cause());
+                            });
+                        
+                    } else {
+                        
+                        OTP otpp = new OTP();
+                        otpp.setOtpId(ret.result().get(0).getOtpId());
+                        otpp.setIdAgentpos(otp.getIdAgentpos());
+                        otpp.setNoDebitur(otp.getNoDebitur());
+                        otpp.setOtp(otp.getOtp());
+                        
+                        update(otpp)
+                            .setHandler(ret2 -> {
+
+                                 if (ret2.succeeded())
+                                     result.complete(otpp);
+                                 else
+                                     result.fail(ret2.cause());
+                             });
+                    }
+                
+                });
+        return result;
+    }
+    
+    public Future<OTP> validateOTP (OTP otp) {
+        
+        Future<OTP> result = Future.future();
+        Integer id = otp.getIdAgentpos();
+        String no = otp.getNoDebitur();
+        
+        queryScriptWihtParam("validOtp", OTP.class, "id", id, "no", no)
+                .setHandler(ret ->{
+                    
+                    if (ret.result().size() > 0) {
+                        result.complete(ret.result().get(0));
+                        
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                
+                });
+        return result;
+    }
+    
 }

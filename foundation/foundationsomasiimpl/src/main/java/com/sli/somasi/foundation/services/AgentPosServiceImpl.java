@@ -12,6 +12,7 @@ import com.sli.somasi.foundation.dto.Assign;
 import com.sli.somasi.foundation.dto.Konsumen;
 import com.sli.somasi.foundation.service.AgentPosService;
 import com.sli.somasi.foundation.CodedException;
+import com.sli.somasi.foundation.dto.OTP;
 import com.sli.somasi.foundation.dto.Setting;
 import com.sli.somasi.foundation.dto.UpdatePassword;
 import io.starlight.AutoWired;
@@ -38,9 +39,11 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ThreadLocalRandom;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 /**
@@ -415,6 +418,33 @@ public class AgentPosServiceImpl implements AgentPosService{
     @Override
     public Future<AgentPos> edit(AgentPos agentPos) {
         return dao.edit(agentPos);
+    }
+
+    @Override
+    public Future<OTP> sendOTP (OTP otp) {
+        
+        String otp_num = ("" + (ThreadLocalRandom.current().nextInt(100000, 999999))).substring(0, 6);
+        otp.setOtp(otp_num);
+        
+        return dao.sendOtp(otp);
+    }
+
+    @Override
+    public Future<Boolean> validateOTP(OTP otp) {
+        
+        Future<Boolean> result = Future.future();
+                
+        dao.validateOTP(otp)
+                .setHandler(ret -> {
+                
+                    if (ret.result().getOtp().equals(otp.getOtp())) {
+                        result.complete(Boolean.TRUE);
+                    } else {
+                        result.complete(Boolean.FALSE);
+                    }
+                
+                });
+        return result;
     }
     
 }

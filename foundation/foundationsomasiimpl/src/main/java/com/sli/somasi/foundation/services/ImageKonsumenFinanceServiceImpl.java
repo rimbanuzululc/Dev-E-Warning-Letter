@@ -39,7 +39,7 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
         finance.setCreated(date);
         
         String encodedBase64 = null;
-        String targetFolderString = "/home/somasi/konsumenImage/"+finance.getKonsumenid();
+        String targetFolderString = "D:/SLI/e-WL/"+finance.getKonsumenid();
         File targetFolder = new File(targetFolderString);
         String base64String = finance.getImageFile();
         BufferedImage image = null;
