@@ -11,6 +11,7 @@ import com.sli.somasi.foundation.service.StatusKAPosService;
 import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.Future;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,11 @@ public class StatusKAPosServiceImpl implements StatusKAPosService{
     @Override
     public Future<StatusKAPos> getByCode(String code) {
         return kAPosDAO.getByCode(code);
+    }
+    
+    @Override
+    public Future<List<StatusKAPos>> listAll() {
+         return kAPosDAO.listAll();
     }
     
 }

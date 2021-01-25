@@ -9,6 +9,7 @@ import com.sli.somasi.foundation.dto.StatusKAPos;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
+import java.util.List;
 
 /**
  *
@@ -35,6 +36,11 @@ public class StatusKAPosDAO extends CommonDAO{
                 
             });
         return result;
+    }
+    
+    public Future<List<StatusKAPos>> listAll() {
+       
+        return queryScriptWihtParam("listAll", StatusKAPos.class);
     }
     
 }

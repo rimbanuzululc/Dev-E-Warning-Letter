@@ -5,18 +5,14 @@
  */
 package com.sli.somasi.foundation.service;
 
-import com.sli.somasi.foundation.dto.StatusKAPos;
+import com.sli.somasi.foundation.dto.ConfirmKAPos;
 import io.vertx.core.Future;
-import java.util.List;
 
 /**
  *
- * @author hp
+ * @author aldy.kurniawan
  */
-public interface StatusKAPosService {
+public interface KAPosService {
     
-    Future<StatusKAPos> getByCode (String code);
-    Future<List<StatusKAPos>> listAll();
-    
-    
+    Future<ConfirmKAPos> submit(ConfirmKAPos confirm);
 }

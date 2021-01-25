@@ -1,14 +1,15 @@
-package com.sli.somasi.apiserver.controller;
-
-/**
- *
- * @author aldy.kurniawan
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+package com.sli.somasi.apiserver.controller;
 
 import com.sli.somasi.apiserver.dto.APIResult;
 import com.sli.somasi.foundation.Errors;
-import com.sli.somasi.foundation.dto.AssignFinance;
-import com.sli.somasi.foundation.service.AssignFinanceService;
+import com.sli.somasi.foundation.dto.ConfirmKAPos;
+import com.sli.somasi.foundation.service.KAPosService;
+import com.sli.somasi.foundation.service.StatusKAPosService;
 import io.starlight.AutoWired;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
@@ -16,19 +17,26 @@ import io.starlight.http.RestController;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpMethod;
 
+/**
+ *
+ * @author aldy.kurniawan
+ */
 
-@RestController("/assign")
-public class AdminController {
+@RestController("/kapos")
+public class KAPosController {
     
     @AutoWired
-    AssignFinanceService assignService;
+    KAPosService service;
     
-    @RequestMapping(value = "", method = HttpMethod.POST)
-    public Future<APIResult> update(@RequestBody AssignFinance assignFinance) {
+    @AutoWired
+    StatusKAPosService statusService;
+    
+    @RequestMapping(value = "/submit", method = HttpMethod.PUT)
+    public Future<APIResult> submit(@RequestBody ConfirmKAPos confirm) {
         
         Future<APIResult> result = Future.future();
         
-        assignService.update(assignFinance)
+        service.submit(confirm)
                 .setHandler(ret -> {
                    
                     APIResult apiResult = new APIResult();
@@ -44,33 +52,13 @@ public class AdminController {
         return result;
     }
     
-    @RequestMapping("/listdebitur")
-    public Future<APIResult> listDebitur() {
-        
-        Future<APIResult> result = Future.future();
-        
-        assignService.listDebitur()
-            .setHandler(ret -> {
-
-                APIResult apiResult = new APIResult();
-
-                if (ret.succeeded())
-                    apiResult.setResult(ret.result());
-                else
-                    apiResult.error(Errors.COMMON, "" + ret.cause());
-
-                result.complete(apiResult);
-            });
-        
-        return result;
-    }
     
-    @RequestMapping("/listnodebitur")
-    public Future<APIResult> listNoDebitur() {
+    @RequestMapping("/listallstatus")
+    public Future<APIResult> listAllStatus() {
         
         Future<APIResult> result = Future.future();
         
-        assignService.listNoDebitur()
+        statusService.listAll()
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

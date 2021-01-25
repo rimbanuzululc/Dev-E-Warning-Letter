@@ -12,3 +12,6 @@
 select * from somasi_statuskapos
 where code = {{code}}
 
+--listAll
+select * from somasi_statuskapos
+

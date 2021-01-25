@@ -34,4 +34,9 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     public Future<List<AssignFinance>> listDebitur() {
          return dao.listDebitur();
     }
+    
+    @Override
+    public Future<List<AssignFinance>> listNoDebitur() {
+         return dao.listNoDebitur();
+    }
 }

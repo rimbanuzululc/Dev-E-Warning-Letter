@@ -26,7 +26,8 @@
                                             "/*/status/*",
                                             "/*/img/*",
                                             "/*/wilayah/*",
-                                            "/*/assign/*"
+                                            "/*/assign/*",
+                                            "/*/kapos/*"
                                         ],
                                 "GET" : [
                                           "/",
