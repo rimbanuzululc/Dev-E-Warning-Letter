@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface RoleMenuService {
     
-    Future<RoleMenu> add(RoleMenu RoleMenu);
+    Future<RoleMenu> add(RoleMenu role);
     Future<RoleMenu> update(RoleMenu role);
     Future<RoleMenu> delete(int userId);
     Future<RoleMenu> getId(int userId);

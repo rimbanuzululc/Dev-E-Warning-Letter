@@ -20,6 +20,14 @@ public class RoleMenu {
     @Computed
     protected List<RoleMenu> listRole;
     
+    public List<RoleMenu> getListRole() {
+        return listRole;
+    }
+
+    public void setListRole(List<RoleMenu> listRole) {
+        this.listRole = listRole;
+    }
+
     public Integer getRoleId() {
         return roleId;
     }
@@ -32,16 +40,8 @@ public class RoleMenu {
         return menuId;
     }
 
-    public void setMenuId(Integer menuId) {
+    public void setMenuid(Integer menuId) {
         this.menuId = menuId;
-    }
-
-    public List<RoleMenu> getListRole() {
-        return listRole;
-    }
-
-    public void setListRole(List<RoleMenu> listRole) {
-        this.listRole = listRole;
     }
     
     

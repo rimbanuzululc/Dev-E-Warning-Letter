@@ -15,6 +15,8 @@ import io.starlight.http.RequestMapping;
 import io.starlight.http.RestController;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.Json;
+
 
 /**
  *
@@ -76,6 +78,8 @@ public class RoleController {
     public Future<APIResult> updaterolemenu(@RequestBody RoleMenu roleMenu) {
         
         Future<APIResult> result = Future.future();
+        
+         System.out.println("Role Menu : "+ Json.encode(roleMenu));
         
         serviceMenu.update(roleMenu)
                 .setHandler(ret -> {

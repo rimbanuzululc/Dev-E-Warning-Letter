@@ -52,7 +52,7 @@ public class RoleMenuDAO extends CommonDAO{
                     if(ret.succeeded())
                         result.complete(roleMenu);
                     else
-                        result.fail(ret.cause());
+                        result.complete(roleMenu);
                 });
 
         execWithParam("delete from somasi_rolemenu where roleid = {{roleid}}",
