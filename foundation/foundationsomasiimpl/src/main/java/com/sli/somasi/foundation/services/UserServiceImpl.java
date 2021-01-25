@@ -5,6 +5,7 @@ import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dao.UserDAO;
 import com.sli.somasi.foundation.dto.HakAksesDTO;
 import com.sli.somasi.foundation.dto.SubMenu;
+import com.sli.somasi.foundation.dto.UpdatePassword;
 import com.sli.somasi.foundation.dto.User;
 import com.sli.somasi.foundation.service.UserService;
 import io.starlight.AutoWired;
@@ -18,6 +19,7 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -152,6 +154,68 @@ public class UserServiceImpl implements UserService {
         return dao.hakAkses(userId);
     }
     
+    
+    @Override
+    public Future<UpdatePassword> updatePass(String userId, String password) {
+        
+        UpdatePassword updatePassword = new UpdatePassword();
+        Future<UpdatePassword> result = Future.future();
+        
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes(),0,password.length());
+            
+            String encoded = new BigInteger(1,digest.digest()).toString(16);
+            System.out.println("New Password : "+encoded);
+        dao.getById(userId)
+                .setHandler(ret -> {
+                    
+                    if (ret.succeeded() && ret.result() != null) {
+                        
+                        System.out.println("Old Password : "+ret.result().getPassword());
+                        
+                        if (ret.result().getPassword().equals(encoded)) {
+                            
+                            updatePassword.setAccepted(false);
+                            updatePassword.setNewPassword(true);
+                            
+                        } else {
+                            
+                            ret.result().setPassword(encoded);
+                            Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Asia/Jakarta"));
+                            cld.setTime(new Date());
+                            cld.add(Calendar.MONTH, 3);
+                            ret.result().setExpired(cld.getTime());
+                            ret.result().setModify(new Date());
+                            dao.update(ret.result())
+                                    .setHandler(update -> {
+                                        
+                                        if (update.result() != null) {
+                                            
+                                            System.out.println("Hasil Update Password : "+update.result().getPassword());
+                                        }
+                                        
+                                    });
+                            
+                                            updatePassword.setAccepted(true);
+                                            updatePassword.setNewPassword(false);
+                        }
+                        
+                    } else {
+                        result.fail(new CodedException(Errors.LOGIN_USER_NOT_FOUND));
+                    }
+                    
+                    result.complete(updatePassword);
+                });
+        
+        } catch(Exception e){
+            System.out.println("Error login exception : " + e.getMessage());
+            e.printStackTrace(System.out);
+            result.fail(new CodedException(Errors.COMMON));
+        }
+        
+        return result;
+    }
     
 //  percobaan update setelah commmit  
     

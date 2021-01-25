@@ -218,4 +218,26 @@ public class UserController {
         
         return result;
     }
+    
+    @RequestMapping(value = "/update/password", method = HttpMethod.POST)
+    public Future<APIResult> updatePass (@QueryParam("username") String userId, @QueryParam("password") String password) {
+        
+        Future<APIResult> result = Future.future();
+        
+        userService.updatePass(userId, password)
+                .setHandler(ret -> {
+                    
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        apiResult.setResult(ret.result());
+                    } else {
+                        apiResult.error(ret.cause());
+                        result.complete(apiResult);
+                    }
+                    
+                    result.complete(apiResult);
+                });
+        return result;
+    }
 }
