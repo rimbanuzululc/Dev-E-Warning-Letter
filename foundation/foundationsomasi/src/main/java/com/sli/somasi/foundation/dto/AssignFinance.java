@@ -32,7 +32,15 @@ public class AssignFinance {
     protected Date last_modify;
     
     protected String type;
-
+    
+    protected Boolean sp;
+    protected Boolean spt;
+    protected Boolean print;
+    protected String assignStatus;
+    protected Integer otp;
+    protected Integer noDebitur;
+    
+    
     public Integer getIdAssignFinance() {
         return idAssignFinance;
     }
@@ -87,6 +95,54 @@ public class AssignFinance {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getSp() {
+        return sp;
+    }
+
+    public void setSp(Boolean sp) {
+        this.sp = sp;
+    }
+
+    public Boolean getSpt() {
+        return spt;
+    }
+
+    public void setSpt(Boolean spt) {
+        this.spt = spt;
+    }
+
+    public Boolean getPrint() {
+        return print;
+    }
+
+    public void setPrint(Boolean print) {
+        this.print = print;
+    }
+
+    public String getAssignStatus() {
+        return assignStatus;
+    }
+
+    public void setAssignStatus(String assignStatus) {
+        this.assignStatus = assignStatus;
+    }
+
+   public Integer getOtp() {
+        return otp;
+    }
+
+    public void setOtp(Integer otp) {
+        this.otp = otp;
+    }
+
+    public Integer getNoDebitur() {
+        return noDebitur;
+    }
+
+    public void setNoDebitur(Integer noDebitur) {
+        this.noDebitur = noDebitur;
     }
     
 }

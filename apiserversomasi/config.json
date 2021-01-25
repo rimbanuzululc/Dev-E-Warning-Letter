@@ -25,7 +25,8 @@
                                             "/*/mapping/*",
                                             "/*/status/*",
                                             "/*/img/*",
-                                            "/*/wilayah/*"
+                                            "/*/wilayah/*",
+                                            "/*/assign/*"
                                         ],
                                 "GET" : [
                                           "/",

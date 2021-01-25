@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sli.somasi.foundation.service;
 
+import com.sli.somasi.foundation.dto.AssignFinance;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import io.vertx.core.Future;
 import java.util.List;
@@ -15,6 +11,7 @@ import java.util.List;
  */
 public interface AssignFinanceService {
     
-    Future<List<KonsumenAggrement>> assign (KonsumenAggrement aggrement);
+    Future<AssignFinance> update(AssignFinance assignFinance);
+    Future<List<AssignFinance>> listDebitur();
     
 }
