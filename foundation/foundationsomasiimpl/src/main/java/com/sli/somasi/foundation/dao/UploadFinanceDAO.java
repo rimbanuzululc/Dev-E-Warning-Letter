@@ -242,10 +242,23 @@ public class UploadFinanceDAO extends CommonDAO{
         konsumen.setZipcodeKtp(zipcodeKtp_int);
         konsumen.setZipcodeTinggal(zipcodeTinggal_int);
         
+        konsumen.setIsCompleted(true);
         
         
         super.insert(konsumen)
                 .compose(ret -> {
+                    
+                    if (ret.getNamaDebitur() == null || ret.getNoAggrement() == null || ret.getAlamatKtp() == null || ret.getProvinsiKtp() == null || 
+                            ret.getKotaKtp() == null || ret.getKecamatanKtp() == null || ret.getKelurahanKtp() == null || ret.getZipcodeKtp() == null || 
+                            ret.getNamaDebitur().equalsIgnoreCase("") || ret.getNoAggrement().equalsIgnoreCase("") || ret.getAlamatKtp().equalsIgnoreCase("") || 
+                            ret.getProvinsiKtp().equalsIgnoreCase("")  || ret.getKotaKtp().equalsIgnoreCase("") || ret.getKecamatanKtp().equalsIgnoreCase("") || ret.getKelurahanKtp().equalsIgnoreCase("")){
+                        
+                        KonsumenAggrement temp = new KonsumenAggrement();
+                        temp.setKonsumenId(ret.getKonsumenId());
+                        temp.setIsCompleted(false);
+                        super.update(temp);
+                        logger.info("Data Konsumen Tidak Lengkap");
+                    }
                     
                     agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
                         .setHandler(ret1 -> {
@@ -254,9 +267,8 @@ public class UploadFinanceDAO extends CommonDAO{
                             AssignFinance assign = new AssignFinance();
                             assign.setIdAgentPos(ret1.result().getIdAgentpos());
                             assign.setAssign_date(new Date());
-                            assign.setNoAggrement(noAggrement);
-                            System.out.println("Konsumen ID2 == " + ret.getKonsumenId());
-                            assign.setKonsumenId(konsumen.getKonsumenId());
+                            assign.setNoAggrement(ret.getNoAggrement());
+                            assign.setKonsumenId(ret.getKonsumenId());
                             assignFinanceDao.add(assign);
                         }
                      });

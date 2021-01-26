@@ -87,6 +87,8 @@ public class KonsumenAggrement {
     
     protected String type;
     
+    protected Boolean isCompleted;
+    
     @Computed
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Jakarta")
     protected Date assignDate;
@@ -493,6 +495,14 @@ public class KonsumenAggrement {
 
     public void setStatusagent(String statusagent) {
         this.statusagent = statusagent;
+    }
+
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
     
 }
