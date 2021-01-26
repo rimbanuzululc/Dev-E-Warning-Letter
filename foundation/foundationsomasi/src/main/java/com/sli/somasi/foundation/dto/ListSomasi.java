@@ -15,11 +15,17 @@ import java.util.Date;
  */
 public class ListSomasi {
     
+    protected Integer konsumenId;
     protected String namaDebitur;
     protected String alamat;
+    protected String kota;
+    protected String kecamatan;
+    protected String kelurahan;
+    protected Integer zipcode;
     protected String noTelp;
     protected String noAggrement;
-    protected String type;
+    protected Boolean sp;
+    protected Boolean spt;
     protected String nomorPolisi;
     
     @Computed
@@ -66,20 +72,68 @@ public class ListSomasi {
         this.nomorPolisi = nomorPolisi;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Date getAssign_date() {
         return assign_date;
     }
 
     public void setAssign_date(Date assign_date) {
         this.assign_date = assign_date;
+    }
+
+    public Boolean getSp() {
+        return sp;
+    }
+
+    public void setSp(Boolean sp) {
+        this.sp = sp;
+    }
+
+    public Boolean getSpt() {
+        return spt;
+    }
+
+    public void setSpt(Boolean spt) {
+        this.spt = spt;
+    }
+
+    public String getKota() {
+        return kota;
+    }
+
+    public void setKota(String kota) {
+        this.kota = kota;
+    }
+
+    public String getKecamatan() {
+        return kecamatan;
+    }
+
+    public void setKecamatan(String kecamatan) {
+        this.kecamatan = kecamatan;
+    }
+
+    public String getKelurahan() {
+        return kelurahan;
+    }
+
+    public void setKelurahan(String kelurahan) {
+        this.kelurahan = kelurahan;
+    }
+
+    public Integer getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(Integer zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public Integer getKonsumenId() {
+        return konsumenId;
+    }
+
+    public void setKonsumenId(Integer konsumenId) {
+        this.konsumenId = konsumenId;
     }
     
 }

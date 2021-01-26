@@ -27,25 +27,29 @@ limit 10 offset [[start]]
 
 --getByNa
 select 
-	k.*,
-	(select description from somasi_status1 where idstatus1 = h.idstatus1) as statusagent
+	k.*
 from somasi_konsumen k
-left join somasi_historystatus h on k.konsumenid = h.konsumenid
 where k.noaggrement = '[[no]]';
 
 --listSomasi
 select 
+        k.konsumenid,
 	k.namadebitur,
 	k.alamatktp as alamat,
+        k.kotaktp as kota,
+	k.kecamatanktp  as kecamatan,
+	k.kelurahanktp as kelurahan,
+	k.zipcodektp as zipcode,
 	k.notelp,
 	k.noaggrement,
-	k.type,
-	k.nomorpolisi
+	a.sp,
+	a.spt,
+	k.nomorpolisi,
+        a.assign_date 
 from somasi_konsumen k 
 left join somasi_assignfinance a on k.konsumenid = a.konsumenid
 left join somasi_agentpos ap on a.idagentpos = ap.idagentpos
-where ap.idagentpos = {{idAgent}} and (k.sendsomasi1date is null and  K.type = 'SOMASI1') 
-or (k.sendsomasi2date is null and k.type = 'SOMASI2');
+where ap.idagentpos = {{idAgent}} and a.print is true and (a.sp is true or a.spt is true)
 
 --getKonsumenByIdAgent
 select 

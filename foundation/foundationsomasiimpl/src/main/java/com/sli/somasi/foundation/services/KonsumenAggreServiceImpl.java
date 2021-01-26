@@ -5,7 +5,9 @@
  */
 package com.sli.somasi.foundation.services;
 
+import com.sli.somasi.foundation.dao.ConfirmAgentPosDAO;
 import com.sli.somasi.foundation.dao.KonsumenAggreDAO;
+import com.sli.somasi.foundation.dto.DetailDebitur;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.ListSomasi;
 import com.sli.somasi.foundation.service.KonsumenAggrementService;
@@ -13,6 +15,7 @@ import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
+import io.vertx.core.json.Json;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +31,9 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
 
     @AutoWired
     KonsumenAggreDAO  aggreDAO;
+    
+    @AutoWired
+    ConfirmAgentPosDAO confirmDAO;
     
     @Override
     public Future<KonsumenAggrement> add(KonsumenAggrement aggremnt) {
@@ -45,38 +51,67 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
     }
 
     @Override
-    public Future<KonsumenAggrement> getByNoAggrement(String no) {
-        return aggreDAO.getByNo(no);
+    public Future<DetailDebitur> getByNoAggrement(String no) {
+        Future<DetailDebitur> result = Future.future();
+        
+        DetailDebitur dd = new DetailDebitur();
+        
+        aggreDAO.getByNo(no)
+                .setHandler(ret -> {
+                    
+                    dd.setKonsumen(ret.result());
+                   
+                    confirmDAO.list("DEB")
+                      .setHandler(ret2 -> {
+                      
+                          dd.setStatusDebitur(ret2.result());
+                          
+                          result.complete(dd);
+                      });
+                    
+                });
+        return result;
     }
 
     @Override
     public Future<List<ListSomasi>> listSomasi(int idAgent) {
         
         Future<List<ListSomasi>> result = Future.future();
-        List<Future> listFuture = new ArrayList<>();
         
-        return
-        aggreDAO.getKonsumenByIdAgent(idAgent)
-                .compose(konsumen -> {
+        aggreDAO.listSomasi(idAgent)
+                .setHandler(ret ->{
                 
-                    if (konsumen.get(0) != null) {
+                    if (ret.result() != null) {
                         
-                        for (int i = 0; i < konsumen.size(); i++) 
-                        {
-                            
-                            listFuture.add(checkStatusSomasi(konsumen.get(i)));
-                        }
-                    } 
-                    return CompositeFuture.join(listFuture);
-        })
-        .compose(ret -> {
+                        result.complete(ret.result());
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                });
+        return result;
         
-            return aggreDAO.listSomasi(idAgent);
-        })
-        .compose(ret2 -> {
-            
-            return Future.succeededFuture(ret2);
-        });
+//        return
+//        aggreDAO.getKonsumenByIdAgent(idAgent)
+//                .compose(konsumen -> {
+//                
+//                    if (konsumen.get(0) != null) {
+//                        
+//                        for (int i = 0; i < konsumen.size(); i++) 
+//                        {
+//                            
+//                            listFuture.add(checkStatusSomasi(konsumen.get(i)));
+//                        }
+//                    } 
+//                    return CompositeFuture.join(listFuture);
+//        })
+//        .compose(ret -> {
+//        
+//            return aggreDAO.listSomasi(idAgent);
+//        })
+//        .compose(ret2 -> {
+//            
+//            return Future.succeededFuture(ret2);
+//        });
     }
     
     public Future<KonsumenAggrement> checkStatusSomasi (KonsumenAggrement aggrement) {

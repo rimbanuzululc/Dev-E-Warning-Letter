@@ -39,6 +39,10 @@ public class AssignFinance {
     protected String assignStatus;
     protected String noDebitur;
     
+    protected Boolean isPending;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Jakarta")
+    protected Date submit_date;
     
     public Integer getIdAssignFinance() {
         return idAssignFinance;

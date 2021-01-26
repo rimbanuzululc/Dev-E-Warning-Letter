@@ -7,7 +7,7 @@ package com.sli.somasi.foundation.dao;
 
 import com.sli.somasi.foundation.dto.HistoryStatus;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
-import com.sli.somasi.foundation.dto.StatusSomasi1;
+import com.sli.somasi.foundation.dto.ConfirmAgentPos;
 import com.sli.somasi.foundation.dto.StatusSomasi2;
 import com.sli.somasi.foundation.dto.SubmitSomasi;
 import io.starlight.AutoWired;
@@ -85,10 +85,10 @@ public class HistoryStatusDAO extends CommonDAO{
         return result;
     }
     
-    public Future<StatusSomasi1> getByCodeSomasi1 (String code) {
-        Future<StatusSomasi1> result = Future.future();
+    public Future<ConfirmAgentPos> getByCodeSomasi1 (String code) {
+        Future<ConfirmAgentPos> result = Future.future();
         
-        queryScriptWihtParam("getByCodeSomasi1", StatusSomasi1.class, "code", code)
+        queryScriptWihtParam("getByCodeSomasi1", ConfirmAgentPos.class, "code", code)
                 .setHandler(ret -> {
                     
                     if (ret.succeeded() && ret.result().size() > 0) {
@@ -139,7 +139,7 @@ public class HistoryStatusDAO extends CommonDAO{
         
         Future<String> result = Future.future();
         HistoryStatus historyStatus = new HistoryStatus();
-        StatusSomasi1 status1 = new StatusSomasi1();
+        ConfirmAgentPos status1 = new ConfirmAgentPos();
         
         Date date = new Date();
         

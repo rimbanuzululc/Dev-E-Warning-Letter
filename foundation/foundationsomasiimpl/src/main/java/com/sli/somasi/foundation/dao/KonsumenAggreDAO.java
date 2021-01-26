@@ -132,7 +132,6 @@ public class KonsumenAggreDAO extends CommonDAO{
                 .setHandler(ret -> {
                 
                     if (ret.succeeded() ) {
-                        System.out.println("Konsumen : "+Json.encode(ret.result()));
                         result.complete(ret.result().get(0));
                         
                     } else {

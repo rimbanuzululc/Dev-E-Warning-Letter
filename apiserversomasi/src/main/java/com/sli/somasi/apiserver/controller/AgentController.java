@@ -167,7 +167,7 @@ public class AgentController {
                     }
                     
                     if (kons != null) {
-                        kons.setAssignDate(now);
+//                        kons.setAssignDate(now);
                         var.put("kons", kons);
                     }
                 
@@ -264,19 +264,19 @@ public class AgentController {
                     
                     Date now = null;
                     Date tgl_nunggak = null;
-                    String nunggak = sdf.format(kons.getTglMulaiMenunggak());
+//                    String nunggak = sdf.format(kons.getTglMulaiMenunggak());
                     
                     try {
                         now = sdf.parse(tgl);
-                        tgl_nunggak = sdf.parse(nunggak);
+//                        tgl_nunggak = sdf.parse(nunggak);
                     } catch (Exception e) {
                     }
                     
-                    if (kons != null) {
-                        kons.setAssignDate(now);
-                        kons.setTglMulaiMenunggak(tgl_nunggak);
-                        var.put("kons", kons);
-                    }
+//                    if (kons != null) {
+//                        kons.setAssignDate(now);
+//                        kons.setTglMulaiMenunggak(tgl_nunggak);
+//                        var.put("kons", kons);
+//                    }
                     var.put("kons", kons);
                 
                     return templateService.generatePDFFromTempate("somasi01", var);

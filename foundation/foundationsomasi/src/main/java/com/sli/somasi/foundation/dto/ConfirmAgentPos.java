@@ -12,12 +12,13 @@ import io.starlight.db.Table;
  *
  * @author hp
  */
-@Table("somasi_status1")
-public class StatusSomasi1 {
+@Table("somasi_confirmagentpos")
+public class ConfirmAgentPos {
     
     protected Integer idStatus1;
     protected String code;
     protected String description;
+    protected Boolean pending;
 
     public Integer getIdStatus1() {
         return idStatus1;
@@ -41,5 +42,13 @@ public class StatusSomasi1 {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getPending() {
+        return pending;
+    }
+
+    public void setPending(Boolean pending) {
+        this.pending = pending;
     }
 }

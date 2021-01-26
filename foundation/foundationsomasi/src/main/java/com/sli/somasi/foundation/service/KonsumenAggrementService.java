@@ -5,11 +5,13 @@
  */
 package com.sli.somasi.foundation.service;
 
+import com.sli.somasi.foundation.dto.DetailDebitur;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.ListSomasi;
 import io.vertx.core.Future;
 import java.util.Date;
 import java.util.List;
+import javax.xml.soap.Detail;
 
 /**
  *
@@ -24,7 +26,7 @@ public interface KonsumenAggrementService {
     
     Future<List<KonsumenAggrement>> search (String param, String value, String startDate, String endDate, int page);
     
-    Future<KonsumenAggrement> getByNoAggrement (String no);
+    Future<DetailDebitur> getByNoAggrement (String no);
     
     Future<List<ListSomasi>> listSomasi (int idAgent);
     
