@@ -19,7 +19,7 @@ import java.util.List;
 public class ConfirmAgentPosDAO extends CommonDAO{
     
     public Future<List<ConfirmAgentPos>> list (String code) {
-       return queryScriptWihtParam("list", ConfirmAgentPos.class, "code", code);
+      return queryScriptWihtParam("list", ConfirmAgentPos.class, "cod", code);
     }
     
 }

@@ -66,7 +66,18 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
                       
                           dd.setStatusDebitur(ret2.result());
                           
-                          result.complete(dd);
+                            confirmDAO.list("UNT")
+                                .setHandler(ret3 -> {
+                      
+                                dd.setStatusUnit(ret3.result());
+                            });
+                                confirmDAO.list("KSP")
+                                    .setHandler(ret4 -> {
+                      
+                                    dd.setKesimpulan(ret4.result());
+                                    
+                                    result.complete(dd);
+                                });
                       });
                     
                 });

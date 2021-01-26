@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface ConfirmAgentPosService {
     
-    Future<List<ConfirmAgentPos>> list ();
+    Future<List<ConfirmAgentPos>> list (String code);
     
 }

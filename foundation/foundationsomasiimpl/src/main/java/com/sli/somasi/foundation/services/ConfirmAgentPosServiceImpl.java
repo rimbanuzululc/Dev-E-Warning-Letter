@@ -24,8 +24,8 @@ public class ConfirmAgentPosServiceImpl  implements ConfirmAgentPosService{
     ConfirmAgentPosDAO capdao;
     
     @Override
-    public Future<List<ConfirmAgentPos>> list() {
-        return capdao.list();
+    public Future<List<ConfirmAgentPos>> list (String code) {
+        return capdao.list(code);
     }
     
 }
