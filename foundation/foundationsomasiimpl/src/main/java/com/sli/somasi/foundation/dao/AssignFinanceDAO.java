@@ -37,8 +37,27 @@ public class AssignFinanceDAO extends CommonDAO{
      public Future<AssignFinance> update(AssignFinance assignFinance) {
         
           Future<AssignFinance> result = Future.future();
-              
-            super.update(assignFinance)
+          
+         if (assignFinance.getIdAssignFinance() == null) {
+             queryScriptWihtParam("getAssign", AssignFinance.class, "idAgent", assignFinance.getIdAgentPos(), 
+                     "idkonsumen", assignFinance.getKonsumenId())
+                     .setHandler(ret -> {
+                         
+                         assignFinance.setIdAssignFinance(ret.result().get(0).getIdAssignFinance());
+                         
+                         super.update(assignFinance)
+                            .setHandler(ret2 -> {
+
+                                if(ret2.succeeded())
+                                    result.complete(ret2.result());
+                                else
+                                    result.fail(ret.cause());
+                            });
+                     
+                     });
+         } else {
+             
+                super.update(assignFinance)
                 .setHandler(ret -> {
 
                     if(ret.succeeded())
@@ -46,6 +65,8 @@ public class AssignFinanceDAO extends CommonDAO{
                     else
                         result.fail(ret.cause());
                 });
+
+         }
         
         return result;
     }

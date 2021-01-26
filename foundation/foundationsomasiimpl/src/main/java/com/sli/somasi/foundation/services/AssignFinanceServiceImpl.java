@@ -13,6 +13,8 @@ import io.vertx.core.Future;
 import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.Future;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 /**
  *
@@ -27,6 +29,11 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     
     @Override
     public Future<AssignFinance> update(AssignFinance assignFinance) {
+        
+        if (assignFinance.getConfirmDebitur()  != null && assignFinance.getNoDebitur() != null) {
+            assignFinance.setSubmit_date(Date.from(Instant.now()));
+        }
+        
         return dao.update(assignFinance);
     }
     

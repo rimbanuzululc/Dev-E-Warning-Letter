@@ -36,10 +36,13 @@ public class AssignFinance {
     protected Boolean sp;
     protected Boolean spt;
     protected Boolean print;
-    protected String assignStatus;
     protected String noDebitur;
     
     protected Boolean isPending;
+    
+    protected String confirmDebitur;
+    protected String confirmUnit;
+    protected String kesimpulan;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Jakarta")
     protected Date submit_date;
@@ -124,20 +127,52 @@ public class AssignFinance {
         this.print = print;
     }
 
-    public String getAssignStatus() {
-        return assignStatus;
-    }
-
-    public void setAssignStatus(String assignStatus) {
-        this.assignStatus = assignStatus;
-    }
-
     public String getNoDebitur() {
         return noDebitur;
     }
 
     public void setNoDebitur(String noDebitur) {
         this.noDebitur = noDebitur;
+    }
+
+    public String getConfirmDebitur() {
+        return confirmDebitur;
+    }
+
+    public void setConfirmDebitur(String confirmDebitur) {
+        this.confirmDebitur = confirmDebitur;
+    }
+
+    public String getConfirmUnit() {
+        return confirmUnit;
+    }
+
+    public void setConfirmUnit(String confirmUnit) {
+        this.confirmUnit = confirmUnit;
+    }
+
+    public String getKesimpulan() {
+        return kesimpulan;
+    }
+
+    public void setKesimpulan(String kesimpulan) {
+        this.kesimpulan = kesimpulan;
+    }
+
+    public Date getSubmit_date() {
+        return submit_date;
+    }
+
+    public void setSubmit_date(Date submit_date) {
+        this.submit_date = submit_date;
+    }
+
+    public Boolean getIsPending() {
+        return isPending;
+    }
+
+    public void setIsPending(Boolean isPending) {
+        this.isPending = isPending;
     }
     
 }
