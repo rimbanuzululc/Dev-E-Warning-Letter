@@ -6,6 +6,7 @@
 package com.sli.somasi.apiserver.controller;
 
 import com.sli.somasi.apiserver.dto.APIResult;
+import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.service.KonsumenAggrementService;
 import io.starlight.AutoWired;
@@ -204,6 +205,26 @@ public class KonsumenAggreController {
                
                 result.complete(apiResult);
                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/listuncompleted")
+    public Future<APIResult> listUnCompleted () {
+        
+        Future<APIResult> result = Future.future();
+       
+       service.listUnCompleted()
+               .setHandler(ret -> {
+                   
+                APIResult aPIResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        aPIResult.setResult(ret.result());
+                    } else {
+                        aPIResult.error(Errors.COMMON, "" + ret.cause());
+                    }
+                    result.complete(aPIResult);
+                });
         return result;
     }
 }

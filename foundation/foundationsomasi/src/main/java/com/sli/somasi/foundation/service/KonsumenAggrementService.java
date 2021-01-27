@@ -35,4 +35,6 @@ public interface KonsumenAggrementService {
     Future<List<KonsumenAggrement>> historyKA (int idAgent);
     
     Future<List<KonsumenAggrement>> history (int idAgent);
+    
+    Future<List<KonsumenAggrement>> listUnCompleted ();
 }

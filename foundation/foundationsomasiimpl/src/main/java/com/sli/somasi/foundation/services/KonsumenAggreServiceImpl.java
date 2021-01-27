@@ -185,4 +185,9 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
         return aggreDAO.historyKA(idAgent);
     }
     
+    @Override
+    public Future<List<KonsumenAggrement>> listUnCompleted() {
+        return aggreDAO.listUnCompleted();
+    }
+    
 }

@@ -98,3 +98,8 @@ left join somasi_mappingareakapos mka on ap.idmappingarea = mka.idmappingarea
 where (k.sendsomasi1date is not null or k.sendsomasi2date is not null) 
 and (mka.idmappingarea = ap.idmappingarea) and  k.statusbyphone is not null
 and mka.idagentpos = {{idAgent}};
+
+--listUnCompleted
+select
+* from 
+somasi_konsumen where iscompleted = false

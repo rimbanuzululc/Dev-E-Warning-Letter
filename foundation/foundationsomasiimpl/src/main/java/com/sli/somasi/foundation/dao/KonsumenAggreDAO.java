@@ -162,4 +162,8 @@ public class KonsumenAggreDAO extends CommonDAO{
         return queryScriptWihtParam("historyKA", KonsumenAggrement.class, "idAgent", idAgent);
     }
     
+    public Future<List<KonsumenAggrement>> listUnCompleted () {
+        return queryScript("listUnCompleted", KonsumenAggrement.class);
+    }
+    
 }
