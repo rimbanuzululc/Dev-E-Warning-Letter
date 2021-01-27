@@ -18,7 +18,7 @@ public class ConfirmAgentPos {
     protected Integer idStatus1;
     protected String code;
     protected String description;
-    protected Boolean pending;
+    protected int value;
 
     public Integer getIdStatus1() {
         return idStatus1;
@@ -44,11 +44,11 @@ public class ConfirmAgentPos {
         this.description = description;
     }
 
-    public Boolean getPending() {
-        return pending;
+    public int getValue() {
+        return value;
     }
 
-    public void setPending(Boolean pending) {
-        this.pending = pending;
+    public void setValue(int value) {
+        this.value = value;
     }
 }

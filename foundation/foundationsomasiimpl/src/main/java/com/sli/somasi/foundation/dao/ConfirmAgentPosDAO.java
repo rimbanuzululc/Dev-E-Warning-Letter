@@ -22,4 +22,8 @@ public class ConfirmAgentPosDAO extends CommonDAO{
       return queryScriptWihtParam("list", ConfirmAgentPos.class, "cod", code);
     }
     
+    public Future<ConfirmAgentPos> getByCode (String code) {
+      return queryScriptSingleWithParam("getByCode", ConfirmAgentPos.class, "code", code);
+    }
+    
 }

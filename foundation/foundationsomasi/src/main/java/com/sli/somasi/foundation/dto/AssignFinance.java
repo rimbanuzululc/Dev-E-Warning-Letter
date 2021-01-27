@@ -38,7 +38,7 @@ public class AssignFinance {
     protected Boolean print;
     protected String noDebitur;
     
-    protected Boolean isPending;
+    protected String status;
     
     protected String confirmDebitur;
     protected String confirmUnit;
@@ -167,12 +167,12 @@ public class AssignFinance {
         this.submit_date = submit_date;
     }
 
-    public Boolean getIsPending() {
-        return isPending;
+    public String getStatus() {
+        return status;
     }
 
-    public void setIsPending(Boolean isPending) {
-        this.isPending = isPending;
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }
