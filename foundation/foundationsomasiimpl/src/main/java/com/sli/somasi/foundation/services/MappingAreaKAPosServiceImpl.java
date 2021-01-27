@@ -5,27 +5,27 @@
  */
 package com.sli.somasi.foundation.services;
 
-import com.sli.somasi.foundation.dao.MappingAreaDAO;
+import com.sli.somasi.foundation.dao.MappingAreaKAPosDAO;
 import com.sli.somasi.foundation.dto.District;
-import com.sli.somasi.foundation.dto.MappingArea;
-import com.sli.somasi.foundation.service.MappingAreaService;
+import com.sli.somasi.foundation.dto.MappingAreaKAPos;
 import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.Future;
 import java.util.List;
+import com.sli.somasi.foundation.service.MappingAreaKAPosService;
 
 /**
  *
  * @author hp
  */
 @Service
-public class MappingAreaServiceImpl implements MappingAreaService {
+public class MappingAreaKAPosServiceImpl implements MappingAreaKAPosService {
 
     @AutoWired
-    MappingAreaDAO dao;
+    MappingAreaKAPosDAO dao;
     
     @Override
-    public Future<MappingArea> add(MappingArea area) {
+    public Future<MappingAreaKAPos> add(MappingAreaKAPos area) {
         return dao.add(area);
     }
 
@@ -35,7 +35,7 @@ public class MappingAreaServiceImpl implements MappingAreaService {
     }
 
     @Override
-    public Future<List<MappingArea>> list() {
+    public Future<List<MappingAreaKAPos>> list() {
         return dao.list();
     }
 

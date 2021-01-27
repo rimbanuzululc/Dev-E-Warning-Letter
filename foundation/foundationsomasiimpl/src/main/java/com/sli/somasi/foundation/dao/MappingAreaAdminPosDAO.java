@@ -5,22 +5,21 @@
  */
 package com.sli.somasi.foundation.dao;
 
-import com.sli.somasi.foundation.dto.MappingArea;
+import com.sli.somasi.foundation.dto.MappingAreaAdminPos;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
-import java.util.List;
 
 /**
  *
  * @author hp
  */
 @DAO(config = "db")
-public class MappingAreaDAO extends CommonDAO {
+public class MappingAreaAdminPosDAO extends CommonDAO {
     
-    public Future<MappingArea> add (MappingArea area) {
+     public Future<MappingAreaAdminPos> add (MappingAreaAdminPos area) {
         
-        Future<MappingArea> result = Future.future();
+        Future<MappingAreaAdminPos> result = Future.future();
         
         insert(area)
                 .setHandler(ret -> {
@@ -33,10 +32,6 @@ public class MappingAreaDAO extends CommonDAO {
                 
                 });
         return result;
-    }
-    
-    public Future<List<MappingArea>> list () {
-        return queryScript("listMappingArea", MappingArea.class);
     }
     
 }

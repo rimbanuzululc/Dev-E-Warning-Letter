@@ -10,6 +10,7 @@ import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.AssignFinance;
 import com.sli.somasi.foundation.service.AssignFinanceService;
 import io.starlight.AutoWired;
+import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
 import io.starlight.http.RestController;
@@ -66,11 +67,11 @@ public class AdminController {
     }
     
     @RequestMapping("/listnodebitur")
-    public Future<APIResult> listNoDebitur() {
+    public Future<APIResult> listNoDebitur(@QueryParam("userId") String userId) {
         
         Future<APIResult> result = Future.future();
         
-        assignService.listNoDebitur()
+        assignService.listNoDebitur(userId)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

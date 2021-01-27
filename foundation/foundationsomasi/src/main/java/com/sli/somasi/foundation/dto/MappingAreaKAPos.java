@@ -12,14 +12,15 @@ import io.starlight.db.Table;
  *
  * @author hp
  */
-@Table("somasi_mappingarea")
-public class MappingArea {
+@Table("somasi_mappingareakapos")
+public class MappingAreaKAPos {
     
     @AutoKey
     protected Integer idMappingArea;
     
-    protected String codeArea;
-    protected Integer districtId;
+    protected String userId;
+    protected String kota;
+    protected Integer cityId;
 
     public Integer getIdMappingArea() {
         return idMappingArea;
@@ -29,20 +30,29 @@ public class MappingArea {
         this.idMappingArea = idMappingArea;
     }
 
-    public String getCodeArea() {
-        return codeArea;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setCodeArea(String codeArea) {
-        this.codeArea = codeArea;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public Integer getDistrictId() {
-        return districtId;
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
+
+    public String getKota() {
+        return kota;
+    }
+
+    public void setKota(String kota) {
+        this.kota = kota;
+    }
+    
     
 }

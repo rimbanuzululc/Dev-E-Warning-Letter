@@ -69,7 +69,7 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     }
     
     @Override
-    public Future<List<AssignFinance>> listNoDebitur() {
-         return dao.listNoDebitur();
+    public Future<List<AssignFinance>> listNoDebitur(String userId) {
+         return dao.listNoDebitur(userId);
     }
 }

@@ -13,7 +13,6 @@ import com.sli.somasi.foundation.dto.AssignFinance;
 import com.sli.somasi.foundation.dto.Konsumen;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.Setting;
-import com.sli.somasi.foundation.dto.MappingAreaAgentKaPos;
 import com.sli.somasi.foundation.dto.OTP;
 import io.starlight.AutoWired;
 import io.starlight.db.CommonDAO;
@@ -42,9 +41,6 @@ public class AgentPosDAO extends CommonDAO {
     
     @AutoWired
     AssignFinanceDAO financeDAO;
-    
-    @AutoWired
-    MappingAreaKaPosDAO kaDAO;
     
     public Future<AgentPos> add (AgentPos agentPos) {
         

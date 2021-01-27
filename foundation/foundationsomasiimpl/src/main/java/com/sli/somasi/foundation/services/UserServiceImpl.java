@@ -46,8 +46,12 @@ public class UserServiceImpl implements UserService {
         
         
         try {
+            String password = "WL-"+user.getName()+"-"+pass;
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes(),0,password.length());
             
-            user.setPassword("WL-"+user.getName()+"-"+pass);
+            String encoded = new BigInteger(1,digest.digest()).toString(16);
+            user.setPassword(encoded);
             user.setCreated(date);
             user.setExpired(calendar.getTime());
 
