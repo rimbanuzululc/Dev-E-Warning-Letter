@@ -38,6 +38,8 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
         
         if (assignFinance.getConfirmDebitur()  != null && assignFinance.getNoDebitur() != null) {
             assignFinance.setSubmit_date(Date.from(Instant.now()));
+        } else {
+            assignFinance.setSubmit_date(null);
         }
         
         if (assignFinance.getConfirmDebitur() != null || !assignFinance.getConfirmDebitur().equals("")){
@@ -46,12 +48,18 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
                     .setHandler(ret ->{
                         if (ret.succeeded() && ret.result() != null){
                             
-                            if (ret.result().getValue() == 1){
-                                assignFinance.setStatus("Berhasil Terkirim");
-                            } else if (ret.result().getValue() == 2){
-                                assignFinance.setStatus("Pending");
-                            } else if (ret.result().getValue() == 3){
-                                assignFinance.setStatus("Failed");
+                            switch (ret.result().getValue()) {
+                                case 1:
+                                    assignFinance.setStatus("Berhasil Terkirim");
+                                    break;
+                                case 2:
+                                    assignFinance.setStatus("Pending");
+                                    break;
+                                case 3:
+                                    assignFinance.setStatus("Failed");
+                                    break;
+                                default:
+                                    break;
                             }
                             
                             dao.update(assignFinance);
