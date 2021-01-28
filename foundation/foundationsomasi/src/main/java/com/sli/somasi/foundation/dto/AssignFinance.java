@@ -7,6 +7,7 @@ package com.sli.somasi.foundation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.starlight.db.AutoKey;
+import io.starlight.db.Computed;
 import io.starlight.db.Table;
 import java.util.Date;
 
@@ -46,6 +47,29 @@ public class AssignFinance {
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Jakarta")
     protected Date submit_date;
+    
+    protected String namaPenerima;
+    
+    @Computed
+    protected String confirmationLongitude;
+    
+    @Computed
+    protected String alamatKtp;
+    
+    @Computed
+    protected String provinsiKtp;
+    
+    @Computed
+    protected String kotaKtp;
+    
+    @Computed
+    protected String kecamatanKtp;
+    
+    @Computed
+    protected String kelurahanKtp;
+    
+    @Computed
+    protected Integer zipcodeKtp;
     
     public Integer getIdAssignFinance() {
         return idAssignFinance;
@@ -173,6 +197,70 @@ public class AssignFinance {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getNamaPenerima() {
+        return namaPenerima;
+    }
+
+    public void setNamaPenerima(String namaPenerima) {
+        this.namaPenerima = namaPenerima;
+    }
+
+    public String getConfirmationLongitude() {
+        return confirmationLongitude;
+    }
+
+    public void setConfirmationLongitude(String confirmationLongitude) {
+        this.confirmationLongitude = confirmationLongitude;
+    }
+
+    public String getAlamatKtp() {
+        return alamatKtp;
+    }
+
+    public void setAlamatKtp(String alamatKtp) {
+        this.alamatKtp = alamatKtp;
+    }
+
+    public String getProvinsiKtp() {
+        return provinsiKtp;
+    }
+
+    public void setProvinsiKtp(String provinsiKtp) {
+        this.provinsiKtp = provinsiKtp;
+    }
+
+    public String getKotaKtp() {
+        return kotaKtp;
+    }
+
+    public void setKotaKtp(String kotaKtp) {
+        this.kotaKtp = kotaKtp;
+    }
+
+    public String getKecamatanKtp() {
+        return kecamatanKtp;
+    }
+
+    public void setKecamatanKtp(String kecamatanKtp) {
+        this.kecamatanKtp = kecamatanKtp;
+    }
+
+    public String getKelurahanKtp() {
+        return kelurahanKtp;
+    }
+
+    public void setKelurahanKtp(String kelurahanKtp) {
+        this.kelurahanKtp = kelurahanKtp;
+    }
+
+    public Integer getZipcodeKtp() {
+        return zipcodeKtp;
+    }
+
+    public void setZipcodeKtp(Integer zipcodeKtp) {
+        this.zipcodeKtp = zipcodeKtp;
     }
     
 }

@@ -11,3 +11,7 @@ where sm.userid = {{userId}}
 
 --getAssign
 select * from somasi_assignfinance sa where idagentpos = {{idAgent}} and konsumenid = {{idkonsumen}}
+
+--reportSendDebitur
+select * from somasi_konsumen k
+left join somasi_assignfinance af on af.konsumenid = k.konsumenid
