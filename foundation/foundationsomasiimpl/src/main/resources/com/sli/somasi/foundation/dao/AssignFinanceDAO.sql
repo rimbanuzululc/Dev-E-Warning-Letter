@@ -15,3 +15,8 @@ select * from somasi_assignfinance sa where idagentpos = {{idAgent}} and konsume
 --reportSendDebitur
 select * from somasi_konsumen k
 left join somasi_assignfinance af on af.konsumenid = k.konsumenid
+
+--reportProductivity
+select count(*) from somasi_konsumen k
+left join somasi_assignfinance af on af.konsumenid = k.konsumenid
+where status ilike '{{status}}'

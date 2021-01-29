@@ -85,4 +85,9 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     public Future<List<AssignFinance>> reportSendDebitur() {
          return dao.reportSendDebitur();
     }
+    
+    @Override
+    public Future<List<AssignFinance>> reportProductivity(String status) {
+         return dao.reportProductivity(status);
+    }
 }

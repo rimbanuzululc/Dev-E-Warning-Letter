@@ -86,5 +86,10 @@ public class AssignFinanceDAO extends CommonDAO{
         return queryScriptWihtParam("reportSendDebitur", AssignFinance.class);
     }
      
+    public Future<List<AssignFinance>> reportProductivity(String status) {
+       
+        return queryScriptWihtParam("reportProductivity", AssignFinance.class, "status", status);
+    }
+     
      
 }

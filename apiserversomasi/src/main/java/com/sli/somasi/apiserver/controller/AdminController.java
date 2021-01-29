@@ -10,6 +10,7 @@ import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.AssignFinance;
 import com.sli.somasi.foundation.service.AssignFinanceService;
 import io.starlight.AutoWired;
+import io.starlight.http.PathParam;
 import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
@@ -107,4 +108,26 @@ public class AdminController {
         
         return result;
     }
+    
+    @RequestMapping("/reportproductivity")
+    public Future<APIResult> reportProductivity(@QueryParam("status") String status) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.reportProductivity(status)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
 }

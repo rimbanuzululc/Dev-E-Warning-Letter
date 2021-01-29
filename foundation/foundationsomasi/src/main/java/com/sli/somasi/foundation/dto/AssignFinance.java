@@ -49,6 +49,8 @@ public class AssignFinance {
     protected Date submit_date;
     
     protected String namaPenerima;
+    protected String debiturLocation;
+    protected String hubunganPenerima;
     
     @Computed
     protected String confirmationLongitude;
@@ -261,6 +263,22 @@ public class AssignFinance {
 
     public void setZipcodeKtp(Integer zipcodeKtp) {
         this.zipcodeKtp = zipcodeKtp;
+    }
+
+    public String getDebiturLocation() {
+        return debiturLocation;
+    }
+
+    public void setDebiturLocation(String debiturLocation) {
+        this.debiturLocation = debiturLocation;
+    }
+
+    public String getHubunganPenerima() {
+        return hubunganPenerima;
+    }
+
+    public void setHubunganPenerima(String hubunganPenerima) {
+        this.hubunganPenerima = hubunganPenerima;
     }
     
 }
