@@ -6,6 +6,7 @@
 package com.sli.somasi.foundation.dao;
 
 import com.sli.somasi.foundation.dto.AssignFinance;
+import com.sli.somasi.foundation.dto.ReportProductivity;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
@@ -86,9 +87,29 @@ public class AssignFinanceDAO extends CommonDAO{
         return queryScriptWihtParam("reportSendDebitur", AssignFinance.class);
     }
      
-    public Future<List<AssignFinance>> reportProductivity(String status) {
-       
-        return queryScriptWihtParam("reportProductivity", AssignFinance.class, "status", status);
+    public Future<ReportProductivity> reportProductivity(Integer idAgent, String status, Integer time, String param) {
+        
+        Future<ReportProductivity> result = Future.future();
+        
+        if(param.equalsIgnoreCase("week")) {
+            param = "day";
+            time = 7 * time;
+        }
+        
+        param = param.toLowerCase();
+        
+        queryScriptWihtParam("reportProductivity", ReportProductivity.class, "id", idAgent, "status", status
+                            , "time", time, "param", param)
+                .setHandler(ret ->{
+                
+                    if (ret.succeeded() && ret.result() != null) {
+                        result.complete(ret.result().get(0));
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                    
+                });
+        return result;
     }
      
      

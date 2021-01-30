@@ -110,11 +110,13 @@ public class AdminController {
     }
     
     @RequestMapping("/reportproductivity")
-    public Future<APIResult> reportProductivity(@QueryParam("status") String status) {
+    public Future<APIResult> reportProductivity(@QueryParam("idAgent") Integer idAgent,
+                                                @QueryParam("time") Integer time,
+                                                @QueryParam("param") String param) {
         
         Future<APIResult> result = Future.future();
         
-        assignService.reportProductivity(status)
+        assignService.reportProductivity(idAgent, time, param)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

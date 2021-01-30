@@ -17,6 +17,10 @@ select * from somasi_konsumen k
 left join somasi_assignfinance af on af.konsumenid = k.konsumenid
 
 --reportProductivity
-select count(*) from somasi_konsumen k
-left join somasi_assignfinance af on af.konsumenid = k.konsumenid
-where status ilike '{{status}}'
+select 
+count(status) as berhasil,
+count(status) as pending,
+count(status) as failed
+from somasi_assignfinance sa 
+where idagentpos = {{id}} and status ilike '%[[status]]%' 
+and submit_date > current_date - interval '[[time]]' [[param]]

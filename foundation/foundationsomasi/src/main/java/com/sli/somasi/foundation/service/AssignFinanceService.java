@@ -1,6 +1,7 @@
 package com.sli.somasi.foundation.service;
 
 import com.sli.somasi.foundation.dto.AssignFinance;
+import com.sli.somasi.foundation.dto.ReportProductivity;
 import io.vertx.core.Future;
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface AssignFinanceService {
     Future<List<AssignFinance>> listDebitur();
     Future<List<AssignFinance>> listNoDebitur(String userId);
     Future<List<AssignFinance>> reportSendDebitur();
-    Future<List<AssignFinance>> reportProductivity(String status);
+    Future<ReportProductivity> reportProductivity(Integer idAgent, Integer time, String param);
     
 }

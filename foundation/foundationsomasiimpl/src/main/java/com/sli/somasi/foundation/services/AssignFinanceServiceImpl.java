@@ -8,6 +8,7 @@ package com.sli.somasi.foundation.services;
 import com.sli.somasi.foundation.dao.AssignFinanceDAO;
 import com.sli.somasi.foundation.dao.ConfirmAgentPosDAO;
 import com.sli.somasi.foundation.dto.AssignFinance;
+import com.sli.somasi.foundation.dto.ReportProductivity;
 import com.sli.somasi.foundation.service.AssignFinanceService;
 import io.starlight.Service;
 import io.vertx.core.Future;
@@ -87,7 +88,47 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     }
     
     @Override
-    public Future<List<AssignFinance>> reportProductivity(String status) {
-         return dao.reportProductivity(status);
+    public Future<ReportProductivity> reportProductivity(Integer idAgent, Integer time, String param) {
+            
+        Future<ReportProductivity> result = Future.future();
+        
+        ReportProductivity productivity = new ReportProductivity();
+                
+         dao.reportProductivity(idAgent, "Berhasil",time, param)
+              .setHandler(ret ->{
+                  
+                  if (ret.result().getBerhasil() == null) {
+                        productivity.setBerhasil(0);
+                    } else {
+                        productivity.setBerhasil(ret.result().getBerhasil());
+                    }
+                  
+                  dao.reportProductivity(idAgent, "pending",time, param)
+                     .setHandler(pending -> {
+                         
+                        if (pending.result().getPending() == null) {
+                               productivity.setPending(0);
+                        } else {
+                               productivity.setPending(pending.result().getPending());   
+                        }
+                         
+                         dao.reportProductivity(idAgent, "failed",time, param)
+                            .setHandler(fail -> {
+                                
+                                if (fail.result().getFailed() == null) {
+                                    productivity.setFailed(0);
+                                } else {
+                                    productivity.setFailed(fail.result().getFailed());
+                                }
+                                
+                                result.complete(productivity);
+                                
+                            });
+                         
+                     });
+                          
+                  
+              });
+         return result;
     }
 }
