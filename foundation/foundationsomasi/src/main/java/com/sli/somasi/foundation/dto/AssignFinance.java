@@ -52,6 +52,9 @@ public class AssignFinance {
     protected String debiturLocation;
     protected String hubunganPenerima;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Jakarta")
+    protected Date resendDate;
+    
     @Computed
     protected String confirmationLongitude;
     
@@ -279,6 +282,14 @@ public class AssignFinance {
 
     public void setHubunganPenerima(String hubunganPenerima) {
         this.hubunganPenerima = hubunganPenerima;
+    }
+
+    public Date getResendDate() {
+        return resendDate;
+    }
+
+    public void setResendDate(Date resendDate) {
+        this.resendDate = resendDate;
     }
     
 }

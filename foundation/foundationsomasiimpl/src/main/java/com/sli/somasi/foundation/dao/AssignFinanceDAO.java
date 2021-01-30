@@ -82,9 +82,9 @@ public class AssignFinanceDAO extends CommonDAO{
         return queryScriptWihtParam("listNoDebitur", AssignFinance.class, "userId", userId);
     }
      
-     public Future<List<AssignFinance>> reportSendDebitur() {
+     public Future<List<AssignFinance>> reportSendDebitur(int idAgent) {
        
-        return queryScriptWihtParam("reportSendDebitur", AssignFinance.class);
+        return queryScriptWihtParam("reportSendDebitur", AssignFinance.class, "id", idAgent);
     }
      
     public Future<ReportProductivity> reportProductivity(Integer idAgent, String status, Integer time, String param) {
@@ -110,6 +110,11 @@ public class AssignFinanceDAO extends CommonDAO{
                     
                 });
         return result;
+    }
+    
+    public Future<List<AssignFinance>> listPending(int idAgent) {
+       
+        return queryScriptWihtParam("listPending", AssignFinance.class, "id", idAgent);
     }
      
      

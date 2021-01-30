@@ -15,6 +15,7 @@ select * from somasi_assignfinance sa where idagentpos = {{idAgent}} and konsume
 --reportSendDebitur
 select * from somasi_konsumen k
 left join somasi_assignfinance af on af.konsumenid = k.konsumenid
+where af.idagentpos = {{id}}
 
 --reportProductivity
 select 
@@ -24,3 +25,7 @@ count(status) as failed
 from somasi_assignfinance sa 
 where idagentpos = {{id}} and status ilike '%[[status]]%' 
 and submit_date > current_date - interval '[[time]]' [[param]]
+
+--listPending
+select * from somasi_assignfinance
+where idagentpos = {{id}} and status ilike 'Pending'

@@ -89,11 +89,11 @@ public class AdminController {
     }
     
     @RequestMapping("/reportsenddebitur")
-    public Future<APIResult> reportSendDebitur() {
+    public Future<APIResult> reportSendDebitur(@QueryParam("idAgent") int idAgent) {
         
         Future<APIResult> result = Future.future();
         
-        assignService.reportSendDebitur()
+        assignService.reportSendDebitur(idAgent)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();
@@ -117,6 +117,27 @@ public class AdminController {
         Future<APIResult> result = Future.future();
         
         assignService.reportProductivity(idAgent, time, param)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/listpending")
+    public Future<APIResult> listPending(@QueryParam("idAgent") int idAgent) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.listPending(idAgent)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();
