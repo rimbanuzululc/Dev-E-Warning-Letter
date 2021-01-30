@@ -16,6 +16,7 @@ import io.starlight.db.DAO;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.Json;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -250,8 +251,9 @@ public class UploadFinanceDAO extends CommonDAO{
                     
                     if (ret.getNamaDebitur() == null || ret.getNoAggrement() == null || ret.getAlamatKtp() == null || ret.getProvinsiKtp() == null || 
                             ret.getKotaKtp() == null || ret.getKecamatanKtp() == null || ret.getKelurahanKtp() == null || ret.getZipcodeKtp() == null || 
-                            ret.getNamaDebitur().equalsIgnoreCase("") || ret.getNoAggrement().equalsIgnoreCase("") || ret.getAlamatKtp().equalsIgnoreCase("") || 
-                            ret.getProvinsiKtp().equalsIgnoreCase("")  || ret.getKotaKtp().equalsIgnoreCase("") || ret.getKecamatanKtp().equalsIgnoreCase("") || ret.getKelurahanKtp().equalsIgnoreCase("")){
+                            ret.getNamaDebitur().equals("") || ret.getNoAggrement().equals("") || (ret.getAlamatKtp().equals("") && ret.getAlamatTinggal().equals("")) || 
+                            (ret.getProvinsiKtp().equals("") && ret.getProvinsiTinggal().equals("")) || (ret.getKotaKtp().equals("") && ret.getKotaTinggal().equals("")) || 
+                            (ret.getKecamatanKtp().equals("") && ret.getKecamatanTinggal().equals("")) || (ret.getKelurahanKtp().equals("") && ret.getKelurahanTinggal().equals(""))){
                         
                         KonsumenAggrement temp = new KonsumenAggrement();
                         temp.setKonsumenId(ret.getKonsumenId());
@@ -260,18 +262,20 @@ public class UploadFinanceDAO extends CommonDAO{
                         logger.info("Data Konsumen Tidak Lengkap");
                     }
                     
-                    agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
-                        .setHandler(ret1 -> {
-                    
-                        if (ret1.succeeded() && ret1.result() != null){
-                            AssignFinance assign = new AssignFinance();
-                            assign.setIdAgentPos(ret1.result().getIdAgentpos());
-                            assign.setAssign_date(new Date());
-                            assign.setNoAggrement(ret.getNoAggrement());
-                            assign.setKonsumenId(ret.getKonsumenId());
-                            assignFinanceDao.add(assign);
-                        }
-                     });
+                    if(konsumen.getIsCompleted()){
+                        agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
+                            .setHandler(ret1 -> {
+
+                            if (ret1.succeeded() && ret1.result() != null){
+                                AssignFinance assign = new AssignFinance();
+                                assign.setIdAgentPos(ret1.result().getIdAgentpos());
+                                assign.setAssign_date(new Date());
+                                assign.setNoAggrement(ret.getNoAggrement());
+                                assign.setKonsumenId(ret.getKonsumenId());
+                                assignFinanceDao.add(assign);
+                            }
+                         });
+                    }
                     
                     return Future.succeededFuture(resultDTO);
                 })
