@@ -136,4 +136,9 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     public Future<List<AssignFinance>> listPending(int idAgent) {
          return dao.listPending(idAgent);
     }
+
+    @Override
+    public Future<List<AssignFinance>> reportSendDebiturAll(String userId) {
+        return dao.reportSendAllDebitur(userId);
+    }
 }

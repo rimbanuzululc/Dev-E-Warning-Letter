@@ -9,6 +9,7 @@ import com.sli.somasi.foundation.dto.ConfirmKAPos;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
+import java.util.List;
 
 /**
  *
@@ -16,7 +17,7 @@ import io.vertx.core.Future;
  */
 
 @DAO(config = "db")
-public class KAPosDao extends CommonDAO{
+public class KAPosDAO extends CommonDAO{
     
     public Future<ConfirmKAPos> submit (ConfirmKAPos confirm) {
         
@@ -32,5 +33,10 @@ public class KAPosDao extends CommonDAO{
                });
         return result; 
         
+    }
+    
+    public Future<List<ConfirmKAPos>> reportVerifikasi (String userId) {
+        
+        return queryScriptWihtParam("reportVerifikasi", ConfirmKAPos.class, "id", userId);
     }
 }

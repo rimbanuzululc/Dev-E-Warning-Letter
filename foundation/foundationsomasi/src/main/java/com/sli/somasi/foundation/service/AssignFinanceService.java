@@ -18,4 +18,6 @@ public interface AssignFinanceService {
     Future<ReportProductivity> reportProductivity(Integer idAgent, Integer time, String param);
     Future<List<AssignFinance>> listPending(int idAgent);
     
+    Future<List<AssignFinance>> reportSendDebiturAll (String userId);
+    
 }

@@ -7,6 +7,7 @@ package com.sli.somasi.foundation.service;
 
 import com.sli.somasi.foundation.dto.ConfirmKAPos;
 import io.vertx.core.Future;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,5 @@ import io.vertx.core.Future;
 public interface KAPosService {
     
     Future<ConfirmKAPos> submit(ConfirmKAPos confirm);
+    Future<List<ConfirmKAPos>> reportVerifikasi (String userId);
 }

@@ -29,3 +29,13 @@ and submit_date > current_date - interval '[[time]]' [[param]]
 --listPending
 select * from somasi_assignfinance
 where idagentpos = {{id}} and status ilike 'Pending'
+
+--reportSendAllDebitur
+select
+af.*,
+sk.*
+from somasi_mappingareakapos sm 
+left join somasi_agentpos sa on sm.cityid = sa.cityid 
+left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
+left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
+where sm.userid = {{userId}}

@@ -6,6 +6,7 @@
 package com.sli.somasi.foundation.dto;
 
 import io.starlight.db.AutoKey;
+import io.starlight.db.Computed;
 import io.starlight.db.Table;
 
 /**
@@ -22,7 +23,16 @@ public class ConfirmKAPos {
     protected Integer konsumenId;
     protected String userIdKapos;
     protected String status;
+    protected String noOtpDebitur;
+    
+    @Computed
     protected String noDebitur;
+    
+    @Computed 
+    protected String noAggrement;
+    
+    @Computed
+    protected String namaDebitur;
 
     public Integer getIdConfirmKapos() {
         return idConfirmKapos;
@@ -64,6 +74,14 @@ public class ConfirmKAPos {
         this.status = status;
     }
 
+    public String getNoOtpDebitur() {
+        return noOtpDebitur;
+    }
+
+    public void setNoOtpDebitur(String noOtpDebitur) {
+        this.noOtpDebitur = noOtpDebitur;
+    }
+
     public String getNoDebitur() {
         return noDebitur;
     }
@@ -71,6 +89,23 @@ public class ConfirmKAPos {
     public void setNoDebitur(String noDebitur) {
         this.noDebitur = noDebitur;
     }
+
+    public String getNoAggrement() {
+        return noAggrement;
+    }
+
+    public void setNoAggrement(String noAggrement) {
+        this.noAggrement = noAggrement;
+    }
+
+    public String getNamaDebitur() {
+        return namaDebitur;
+    }
+
+    public void setNamaDebitur(String namaDebitur) {
+        this.namaDebitur = namaDebitur;
+    }
+    
     
     
 }
