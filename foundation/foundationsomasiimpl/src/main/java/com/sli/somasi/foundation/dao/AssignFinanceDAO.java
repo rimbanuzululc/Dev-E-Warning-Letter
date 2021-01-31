@@ -79,7 +79,7 @@ public class AssignFinanceDAO extends CommonDAO{
         return queryScriptWihtParam("listDebitur", AssignFinance.class);
     }
      
-     public Future<List<AssignFinance>> listNoDebitur(String userId) {
+     public Future<List<AssignFinance>> listNoDebitur(int idAgent) {
        
         return queryScriptWihtParam("listNoDebitur", AssignFinance.class, "userId", userId);
     }

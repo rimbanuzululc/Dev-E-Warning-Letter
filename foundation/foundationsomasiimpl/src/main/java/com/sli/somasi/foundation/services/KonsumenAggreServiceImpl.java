@@ -196,8 +196,8 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
     }
     
     @Override
-    public Future<List<KonsumenAggrement>> listDebiturAgentPos(String userId) {
-        return aggreDAO.listDebiturAgentPos(userId);
+    public Future<List<KonsumenAggrement>> listDebiturAgentPos(int idAgent) {
+        return aggreDAO.listDebiturAgentPos(idAgent);
     }
     
 }

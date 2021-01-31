@@ -351,11 +351,11 @@ public class AgentPosController {
     }
     
     @RequestMapping("/listdebitur")
-    public Future<APIResult> listDebitur(@QueryParam ("userId") String userId) {
+    public Future<APIResult> listDebitur(@QueryParam ("agentid") int idAgent) {
         
         Future<APIResult> result = Future.future();
         
-        konsumenAggreService.listDebiturAgentPos(userId)
+        konsumenAggreService.listDebiturAgentPos(idAgent)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();
