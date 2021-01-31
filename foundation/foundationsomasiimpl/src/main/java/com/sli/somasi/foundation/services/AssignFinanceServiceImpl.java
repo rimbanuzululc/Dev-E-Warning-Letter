@@ -141,4 +141,9 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     public Future<List<AssignFinance>> reportSendDebiturAll(String userId) {
         return dao.reportSendAllDebitur(userId);
     }
+
+    @Override
+    public Future<List<AssignFinance>> reportSendDebiturforAdmin(String userId) {
+        return dao.reportSendDebiturforAdmin(userId);
+    }
 }

@@ -39,3 +39,13 @@ left join somasi_agentpos sa on sm.cityid = sa.cityid
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
 left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
 where sm.userid = {{userId}}
+
+--reportSendDebiturforAdmin
+select
+af.*,
+sk.*
+from somasi_mappingareadminpos sm 
+left join somasi_agentpos sa on sm.districtid = sa.districtid 
+left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
+left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
+where sm.userid =  {{userId}}

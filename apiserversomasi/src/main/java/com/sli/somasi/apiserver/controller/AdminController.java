@@ -91,4 +91,25 @@ public class AdminController {
         
         return result;
     }
+    
+    @RequestMapping("/reportSendDebitur")
+    public Future<APIResult> reportSendDebitur (@QueryParam ("userId") String userId) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.reportSendDebiturforAdmin(userId)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
 }
