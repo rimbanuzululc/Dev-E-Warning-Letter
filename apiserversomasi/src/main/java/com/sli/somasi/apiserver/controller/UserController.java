@@ -114,7 +114,7 @@ public class UserController {
         return future;
     }
     
-    @RequestMapping(value = "", method = HttpMethod.PUT)
+    @RequestMapping(value = "", method = HttpMethod.POST)
     public Future<APIResult> add(@RequestBody User user) {
         
         Future<APIResult> result = Future.future();
@@ -135,7 +135,7 @@ public class UserController {
         return result;
     }
     
-    @RequestMapping(value = "", method = HttpMethod.POST)
+    @RequestMapping(value = "", method = HttpMethod.PUT)
     public Future<APIResult> update(@RequestBody User user) {
         
         Future<APIResult> result = Future.future();
@@ -219,7 +219,7 @@ public class UserController {
         return result;
     }
     
-    @RequestMapping(value = "/update/password", method = HttpMethod.POST)
+    @RequestMapping(value = "/update/password", method = HttpMethod.PUT)
     public Future<APIResult> updatePass (@QueryParam("username") String userId, @QueryParam("password") String password) {
         
         Future<APIResult> result = Future.future();

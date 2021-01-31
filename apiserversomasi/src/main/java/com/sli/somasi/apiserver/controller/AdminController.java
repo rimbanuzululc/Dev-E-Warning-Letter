@@ -25,7 +25,7 @@ public class AdminController {
     @AutoWired
     AssignFinanceService assignService;
     
-    @RequestMapping(value = "", method = HttpMethod.POST)
+    @RequestMapping(value = "", method = HttpMethod.PUT)
     public Future<APIResult> update(@RequestBody AssignFinance assignFinance) {
         
         Future<APIResult> result = Future.future();
