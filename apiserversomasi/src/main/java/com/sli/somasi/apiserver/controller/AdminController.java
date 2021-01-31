@@ -29,6 +29,8 @@ public class AdminController {
     
     @AutoWired
     KAPosService kapos;
+    
+    @AutoWired
     KonsumenAggrementService konsumenAggreService;
     
     @RequestMapping(value = "", method = HttpMethod.PUT)
@@ -53,7 +55,7 @@ public class AdminController {
     }
     
     @RequestMapping("/listdebitur")
-    public Future<APIResult> listDebiturAdmin(@QueryParam("userId") String userId) {
+    public Future<APIResult> listDebiturAdmin(@QueryParam ("userId") String userId) {
         
         Future<APIResult> result = Future.future();
         
