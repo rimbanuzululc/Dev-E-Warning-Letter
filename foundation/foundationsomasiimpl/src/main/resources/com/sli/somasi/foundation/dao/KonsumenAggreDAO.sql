@@ -103,3 +103,15 @@ and mka.idagentpos = {{idAgent}};
 select
 * from 
 somasi_konsumen where iscompleted = false
+
+--listDebiturAdmin
+select k.* from somasi_konsumen k
+left join somasi_assignfinance af on af.konsumenid = k.konsumenid
+left join somasi_agentpos a on a.idagentpos = af.idagentpos
+left join somasi_mappingareadminpos sm on a.districtid = sm.districtid
+where sm.userid = {{userId}}
+
+--listDebiturAgentPos
+select * from somasi_konsumen k
+left join somasi_assignfinance af on af.konsumenid = k.konsumenid
+where af.idagentpos = {{id}} and (af.sp = true or af.spt = true) and af.print = true

@@ -1,12 +1,13 @@
---listDebitur
-select * from somasi_konsumen k
-left join somasi_assignfinance af on af.konsumenid = k.konsumenid
-where (af.sp = true or af.spt = true) and af.print = true
-
 --listNoDebitur
 select af.* from somasi_mappingareakapos sm 
 left join somasi_agentpos sa on sm.cityid = sa.cityid 
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
+where sm.userid = {{userId}}
+
+--listNoDebiturAdmin
+select af.* from somasi_mappingareadminpos sm 
+left join somasi_agentpos a on a.districtid = sm.districtid 
+left join somasi_assignfinance af on a.idagentpos = af.idagentpos 
 where sm.userid = {{userId}}
 
 --getAssign

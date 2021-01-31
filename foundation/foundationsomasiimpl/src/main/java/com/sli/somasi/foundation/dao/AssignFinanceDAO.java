@@ -6,6 +6,8 @@
 package com.sli.somasi.foundation.dao;
 
 import com.sli.somasi.foundation.dto.AssignFinance;
+import com.sli.somasi.foundation.dto.Konsumen;
+import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.ReportProductivity;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
@@ -120,6 +122,11 @@ public class AssignFinanceDAO extends CommonDAO{
     public Future<List<AssignFinance>> reportSendAllDebitur (String userId) {
         
         return queryScriptWihtParam("reportSendAllDebitur", AssignFinance.class, "userId", userId);
+    }
+    
+    public Future<List<AssignFinance>> listNoDebiturAdmin(String userId) {
+       
+        return queryScriptWihtParam("listNoDebiturAdmin", AssignFinance.class, "userId", userId);
     }
      
     public Future<List<AssignFinance>> reportSendDebiturforAdmin (String userId) {

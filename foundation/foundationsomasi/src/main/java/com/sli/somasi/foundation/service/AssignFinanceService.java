@@ -14,6 +14,7 @@ public interface AssignFinanceService {
     Future<AssignFinance> update(AssignFinance assignFinance);
     Future<List<AssignFinance>> listDebitur();
     Future<List<AssignFinance>> listNoDebitur(String userId);
+    Future<List<AssignFinance>> listNoDebiturAdmin(String userId);
     Future<List<AssignFinance>> reportSendDebitur(int idAgent);
     Future<ReportProductivity> reportProductivity(Integer idAgent, Integer time, String param);
     Future<List<AssignFinance>> listPending(int idAgent);

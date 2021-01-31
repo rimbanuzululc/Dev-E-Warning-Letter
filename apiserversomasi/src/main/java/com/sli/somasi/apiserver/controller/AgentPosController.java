@@ -13,6 +13,7 @@ import com.sli.somasi.foundation.dto.AgentPos;
 import com.sli.somasi.foundation.dto.OTP;
 import com.sli.somasi.foundation.service.AgentPosService;
 import com.sli.somasi.foundation.service.AssignFinanceService;
+import com.sli.somasi.foundation.service.KonsumenAggrementService;
 import io.starlight.AutoWired;
 import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
@@ -34,6 +35,9 @@ public class AgentPosController {
     
     @AutoWired
     AssignFinanceService assignService;
+    
+    @AutoWired
+    KonsumenAggrementService konsumenAggreService;
     
     @RequestMapping(value = "/add", method = HttpMethod.POST)
     public Future<APIResult> add (@RequestBody AgentPos agentPos) {
@@ -331,6 +335,27 @@ public class AgentPosController {
         Future<APIResult> result = Future.future();
         
         assignService.listPending(idAgent)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/listdebitur")
+    public Future<APIResult> listDebitur(@QueryParam ("userId") String userId) {
+        
+        Future<APIResult> result = Future.future();
+        
+        konsumenAggreService.listDebiturAgentPos(userId)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

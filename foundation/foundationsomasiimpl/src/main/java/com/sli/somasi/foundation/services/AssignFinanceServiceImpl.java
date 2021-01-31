@@ -83,6 +83,11 @@ public class AssignFinanceServiceImpl implements AssignFinanceService {
     }
     
     @Override
+    public Future<List<AssignFinance>> listNoDebiturAdmin(String userId) {
+         return dao.listNoDebiturAdmin(userId);
+    }
+    
+    @Override
     public Future<List<AssignFinance>> reportSendDebitur(int idAgent) {
          return dao.reportSendDebitur(idAgent);
     }

@@ -10,6 +10,7 @@ import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.AssignFinance;
 import com.sli.somasi.foundation.service.AssignFinanceService;
 import com.sli.somasi.foundation.service.KAPosService;
+import com.sli.somasi.foundation.service.KonsumenAggrementService;
 import io.starlight.AutoWired;
 import io.starlight.http.PathParam;
 import io.starlight.http.QueryParam;
@@ -28,6 +29,7 @@ public class AdminController {
     
     @AutoWired
     KAPosService kapos;
+    KonsumenAggrementService konsumenAggreService;
     
     @RequestMapping(value = "", method = HttpMethod.PUT)
     public Future<APIResult> update(@RequestBody AssignFinance assignFinance) {
@@ -51,11 +53,11 @@ public class AdminController {
     }
     
     @RequestMapping("/listdebitur")
-    public Future<APIResult> listDebitur() {
+    public Future<APIResult> listDebiturAdmin(@QueryParam("userId") String userId) {
         
         Future<APIResult> result = Future.future();
         
-        assignService.listDebitur()
+        konsumenAggreService.listDebiturAdmin(userId)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();
@@ -98,6 +100,27 @@ public class AdminController {
         Future<APIResult> result = Future.future();
         
         assignService.reportSendDebiturforAdmin(userId)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/listnodebitur")
+    public Future<APIResult> listNoDebiturAdmin(String userId) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.listNoDebiturAdmin(userId)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

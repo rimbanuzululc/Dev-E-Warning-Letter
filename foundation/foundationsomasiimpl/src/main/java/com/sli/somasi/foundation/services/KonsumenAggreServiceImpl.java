@@ -190,4 +190,14 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
         return aggreDAO.listUnCompleted();
     }
     
+    @Override
+    public Future<List<KonsumenAggrement>> listDebiturAdmin(String userId) {
+        return aggreDAO.listDebiturAdmin(userId);
+    }
+    
+    @Override
+    public Future<List<KonsumenAggrement>> listDebiturAgentPos(String userId) {
+        return aggreDAO.listDebiturAgentPos(userId);
+    }
+    
 }
