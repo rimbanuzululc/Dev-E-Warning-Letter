@@ -170,8 +170,8 @@ public class KonsumenAggreDAO extends CommonDAO{
         return queryScriptWihtParam("listDebiturAdmin", KonsumenAggrement.class, "userId", userId);
     }
     
-    public Future<List<KonsumenAggrement>> listDebiturAgentPos (String userId) {
-        return queryScriptWihtParam("listDebiturAgentPos", KonsumenAggrement.class, "userId", userId);
+    public Future<List<KonsumenAggrement>> listDebiturAgentPos (int idAgent) {
+        return queryScriptWihtParam("listDebiturAgentPos", KonsumenAggrement.class, "id", idAgent);
     }
     
 }
