@@ -207,30 +207,30 @@ public class UploadFinanceDAO extends CommonDAO{
         KonsumenAggrement konsumen = new KonsumenAggrement();
         
         konsumen.setAlamatBpkb(alamatBpkb);
-        konsumen.setAlamatKtp(alamatKtp);
-        konsumen.setAlamatTinggal(alamatTinggal);
+        konsumen.setAlamatKtp((alamatKtp.equals("")) ? null : alamatKtp);
+        konsumen.setAlamatTinggal((alamatTinggal.equals("")) ? null : alamatTinggal);
         konsumen.setAtasNamaBpkb(atasNamaBpkb);
         konsumen.setInstallment(installment_int);
         konsumen.setJenisPerjanjian(jenisPerjanjian);
-        konsumen.setKecamatanKtp(kecamatanKtp);
-        konsumen.setKecamatanTinggal(kecamatanTinggal);
-        konsumen.setKelurahanKtp(kelurahanKtp);
-        konsumen.setKelurahanTinggal(kelurahanTinggal);
+        konsumen.setKecamatanKtp((kecamatanKtp.equals("")) ? null : kecamatanKtp);
+        konsumen.setKecamatanTinggal((kecamatanTinggal.equals("")) ? null : kecamatanTinggal);
+        konsumen.setKelurahanKtp((kelurahanKtp.equals("")) ? null : kelurahanKtp);
+        konsumen.setKelurahanTinggal((kelurahanTinggal.equals("")) ? null : kelurahanTinggal);
         konsumen.setKondisiKendaraan(kondisiKendaraan);
-        konsumen.setKotaKtp(kotaKtp);
-        konsumen.setKotaTinggal(kotaTinggal);
+        konsumen.setKotaKtp((kotaKtp.equals("")) ? null : kotaKtp);
+        konsumen.setKotaTinggal((kotaTinggal.equals("")) ? null : kotaTinggal);
         konsumen.setKronologi(kronologi);
         konsumen.setMerkKendaraan(merkKendaraan);
-        konsumen.setNamaDebitur(namaDebitur);
-        konsumen.setNoAggrement(noAggrement);
+        konsumen.setNamaDebitur((namaDebitur.equals("")) ? null : namaDebitur);
+        konsumen.setNoAggrement((noAggrement.equals("")) ? null : noAggrement);
         konsumen.setNoTelp(noTelp);
         konsumen.setNomorBpkb(nomorBpkb);
         konsumen.setNomorMesin(nomorMesin);
         konsumen.setNomorPolisi(nomorPolisi);
         konsumen.setNomorRangka(nomorRangka);
         konsumen.setNomorStnk(nomorStnk);
-        konsumen.setProvinsiKtp(provinsiKtp);
-        konsumen.setProvinsiTinggal(provinsiTinggal);
+        konsumen.setProvinsiKtp((provinsiKtp.equals("")) ? null : provinsiKtp);
+        konsumen.setProvinsiTinggal((provinsiTinggal.equals("")) ? null : provinsiTinggal);
         konsumen.setSertifikatJaminan(sertifikatJaminan);
         konsumen.setSisaOutstanding(sisaOutstanding_int);
         konsumen.setTahunKendaraan(tahunKendaraan);
@@ -245,26 +245,27 @@ public class UploadFinanceDAO extends CommonDAO{
         
         konsumen.setIsCompleted(true);
         
+        if (konsumen.getNamaDebitur() == null || konsumen.getNoAggrement() == null) {
+            
+            konsumen.setIsCompleted(false);
+            
+        } else if (konsumen.getAlamatTinggal() == null && konsumen.getAlamatKtp()== null && konsumen.getProvinsiKtp() == null
+                && konsumen.getProvinsiTinggal() == null & konsumen.getKotaTinggal() == null && konsumen.getKotaKtp() == null
+                && konsumen.getKecamatanKtp() == null && konsumen.getKecamatanTinggal() == null && konsumen.getKelurahanKtp() == null 
+                && konsumen.getKelurahanTinggal() == null && konsumen.getZipcodeKtp() == null
+                && konsumen.getZipcodeTinggal() == null) {
+            
+            konsumen.setIsCompleted(false);
+            
+        }
+        
         
         super.insert(konsumen)
                 .compose(ret -> {
                     
-                    if (ret.getNamaDebitur() == null || ret.getNoAggrement() == null || ret.getAlamatKtp() == null || ret.getProvinsiKtp() == null || 
-                            ret.getKotaKtp() == null || ret.getKecamatanKtp() == null || ret.getKelurahanKtp() == null || ret.getZipcodeKtp() == null || 
-                            ret.getNamaDebitur().equals("") || ret.getNoAggrement().equals("") || (ret.getAlamatKtp().equals("") && ret.getAlamatTinggal().equals("")) || 
-                            (ret.getProvinsiKtp().equals("") && ret.getProvinsiTinggal().equals("")) || (ret.getKotaKtp().equals("") && ret.getKotaTinggal().equals("")) || 
-                            (ret.getKecamatanKtp().equals("") && ret.getKecamatanTinggal().equals("")) || (ret.getKelurahanKtp().equals("") && ret.getKelurahanTinggal().equals(""))){
-                        
-                        KonsumenAggrement temp = new KonsumenAggrement();
-                        temp.setKonsumenId(ret.getKonsumenId());
-                        temp.setIsCompleted(false);
-                        super.update(temp);
-                        logger.info("Data Konsumen Tidak Lengkap");
-                    }
-                    
-                    if(konsumen.getIsCompleted()){
-                        if (konsumen.getZipcodeTinggal()!= null) {
-                            agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
+                    if(ret.getIsCompleted()){
+                        if (ret.getZipcodeTinggal()!= null) {
+                            agentPosDao.getByZipcode(ret.getZipcodeTinggal().toString())
                             .setHandler(ret1 -> {
 
                             if (ret1.succeeded() && ret1.result() != null){
@@ -276,8 +277,8 @@ public class UploadFinanceDAO extends CommonDAO{
                                 assignFinanceDao.add(assign);
                             }
                          });
-                        } else if (konsumen.getZipcodeKtp() != null) {
-                            agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
+                        } else if (ret.getZipcodeKtp() != null) {
+                            agentPosDao.getByZipcode(ret.getZipcodeKtp().toString())
                             .setHandler(ret1 -> {
 
                             if (ret1.succeeded() && ret1.result() != null){
