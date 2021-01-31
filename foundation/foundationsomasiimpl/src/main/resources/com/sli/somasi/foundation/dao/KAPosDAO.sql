@@ -18,4 +18,14 @@ from somasi_confirmkapos ka
 left join somasi_konsumen sk on ka.konsumenid = sk.konsumenid 
 where ka.useridkapos = {{id}}
 
-
+--reportVerifikasiforAdmin
+select 
+sc.*,
+sk.namadebitur,
+sk.notelp as noDebitur,
+sk.noAggrement 
+from somasi_mappingareadminpos sm 
+left join somasi_agentpos sa on sm.districtid = sa.districtid 
+left join somasi_confirmkapos sc on sa.idagentpos = sc.idagentpos 
+left join somasi_konsumen sk on sc.konsumenid = sk.konsumenid 
+where sm.userid = {{userId}}

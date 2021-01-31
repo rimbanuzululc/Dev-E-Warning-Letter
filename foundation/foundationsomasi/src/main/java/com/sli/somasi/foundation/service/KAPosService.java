@@ -17,4 +17,5 @@ public interface KAPosService {
     
     Future<ConfirmKAPos> submit(ConfirmKAPos confirm);
     Future<List<ConfirmKAPos>> reportVerifikasi (String userId);
+    Future<List<ConfirmKAPos>> reportVerifikasiForAdmin (String userId);
 }

@@ -188,7 +188,7 @@ public class AgentPosController {
         return result;
     }
     
-    @RequestMapping(value = "/update/password", method = HttpMethod.POST)
+    @RequestMapping(value = "/update/password", method = HttpMethod.PUT)
     public Future<APIResult> updatePass (@QueryParam("username") String username, @QueryParam("password") String password) {
         
         Future<APIResult> result = Future.future();

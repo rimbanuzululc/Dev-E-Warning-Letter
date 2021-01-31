@@ -9,6 +9,7 @@ import com.sli.somasi.foundation.dto.ConfirmKAPos;
 import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,5 +39,34 @@ public class KAPosDAO extends CommonDAO{
     public Future<List<ConfirmKAPos>> reportVerifikasi (String userId) {
         
         return queryScriptWihtParam("reportVerifikasi", ConfirmKAPos.class, "id", userId);
+    }
+    
+    public Future<List<ConfirmKAPos>> reportVerifikasiforAdmin (String userId) {
+        
+        Future<List<ConfirmKAPos>> result = Future.future();
+        
+        List<ConfirmKAPos> list = new ArrayList<>();
+        
+        queryScriptWihtParam("reportVerifikasiforAdmin", ConfirmKAPos.class, "userId", userId)
+                .setHandler(ret -> {
+                    
+                    if (ret.succeeded() && ret.result().size() > 0) {
+                            
+                        for (int i = 0; i < ret.result().size(); i++) {
+                            
+                            if (ret.result().get(i).getIdConfirmKapos() != null) {
+                                
+                                list.add(ret.result().get(i));
+                            }
+                        }
+                        
+                       result.complete(list);
+                        
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                    
+                });
+        return result;
     }
 }
