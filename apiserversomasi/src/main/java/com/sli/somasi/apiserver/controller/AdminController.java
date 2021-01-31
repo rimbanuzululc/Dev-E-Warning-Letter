@@ -19,7 +19,7 @@ import io.vertx.core.Future;
 import io.vertx.core.http.HttpMethod;
 
 
-@RestController("/assign")
+@RestController("/admin")
 public class AdminController {
     
     @AutoWired
@@ -67,89 +67,4 @@ public class AdminController {
         return result;
     }
     
-    @RequestMapping("/listnodebitur")
-    public Future<APIResult> listNoDebitur(@QueryParam("userId") String userId) {
-        
-        Future<APIResult> result = Future.future();
-        
-        assignService.listNoDebitur(userId)
-            .setHandler(ret -> {
-
-                APIResult apiResult = new APIResult();
-
-                if (ret.succeeded())
-                    apiResult.setResult(ret.result());
-                else
-                    apiResult.error(Errors.COMMON, "" + ret.cause());
-
-                result.complete(apiResult);
-            });
-        
-        return result;
-    }
-    
-    @RequestMapping("/reportsenddebitur")
-    public Future<APIResult> reportSendDebitur(@QueryParam("idAgent") int idAgent) {
-        
-        Future<APIResult> result = Future.future();
-        
-        assignService.reportSendDebitur(idAgent)
-            .setHandler(ret -> {
-
-                APIResult apiResult = new APIResult();
-
-                if (ret.succeeded())
-                    apiResult.setResult(ret.result());
-                else
-                    apiResult.error(Errors.COMMON, "" + ret.cause());
-
-                result.complete(apiResult);
-            });
-        
-        return result;
-    }
-    
-    @RequestMapping("/reportproductivity")
-    public Future<APIResult> reportProductivity(@QueryParam("idAgent") Integer idAgent,
-                                                @QueryParam("time") Integer time,
-                                                @QueryParam("param") String param) {
-        
-        Future<APIResult> result = Future.future();
-        
-        assignService.reportProductivity(idAgent, time, param)
-            .setHandler(ret -> {
-
-                APIResult apiResult = new APIResult();
-
-                if (ret.succeeded())
-                    apiResult.setResult(ret.result());
-                else
-                    apiResult.error(Errors.COMMON, "" + ret.cause());
-
-                result.complete(apiResult);
-            });
-        
-        return result;
-    }
-    
-    @RequestMapping("/listpending")
-    public Future<APIResult> listPending(@QueryParam("idAgent") int idAgent) {
-        
-        Future<APIResult> result = Future.future();
-        
-        assignService.listPending(idAgent)
-            .setHandler(ret -> {
-
-                APIResult apiResult = new APIResult();
-
-                if (ret.succeeded())
-                    apiResult.setResult(ret.result());
-                else
-                    apiResult.error(Errors.COMMON, "" + ret.cause());
-
-                result.complete(apiResult);
-            });
-        
-        return result;
-    }
 }

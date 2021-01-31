@@ -12,6 +12,7 @@ import com.sli.somasi.foundation.dto.AssignDTO;
 import com.sli.somasi.foundation.dto.AgentPos;
 import com.sli.somasi.foundation.dto.OTP;
 import com.sli.somasi.foundation.service.AgentPosService;
+import com.sli.somasi.foundation.service.AssignFinanceService;
 import io.starlight.AutoWired;
 import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
@@ -30,6 +31,9 @@ public class AgentPosController {
     
     @AutoWired
     AgentPosService service;
+    
+    @AutoWired
+    AssignFinanceService assignService;
     
     @RequestMapping(value = "/add", method = HttpMethod.POST)
     public Future<APIResult> add (@RequestBody AgentPos agentPos) {
@@ -274,6 +278,71 @@ public class AgentPosController {
                     result.complete(aPIResult);
                     
                 });
+        return result;
+    }
+    
+    @RequestMapping("/reportsenddebitur")
+    public Future<APIResult> reportSendDebitur(@QueryParam("idAgent") int idAgent) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.reportSendDebitur(idAgent)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/reportproductivity")
+    public Future<APIResult> reportProductivity(@QueryParam("idAgent") Integer idAgent,
+                                                @QueryParam("time") Integer time,
+                                                @QueryParam("param") String param) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.reportProductivity(idAgent, time, param)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/listpending")
+    public Future<APIResult> listPending(@QueryParam("idAgent") int idAgent) {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.listPending(idAgent)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
         return result;
     }
 }

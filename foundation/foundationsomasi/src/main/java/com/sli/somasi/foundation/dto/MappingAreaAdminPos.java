@@ -12,7 +12,7 @@ import io.starlight.db.Table;
  *
  * @author hp
  */
-@Table("somasi_mappingareadminapos")
+@Table("somasi_mappingareadminpos")
 public class MappingAreaAdminPos {
     
     @AutoKey

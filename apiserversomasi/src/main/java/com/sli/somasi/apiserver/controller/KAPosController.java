@@ -121,5 +121,26 @@ public class KAPosController {
         
         return result;
     }
+    
+    @RequestMapping("/listnodebitur")
+    public Future<APIResult> listNoDebitur(@QueryParam("userId") String userId) {
+        
+        Future<APIResult> result = Future.future();
+        
+        financeService.listNoDebitur(userId)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
         
 }
