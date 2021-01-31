@@ -40,5 +40,5 @@ public interface KonsumenAggrementService {
     
     Future<List<KonsumenAggrement>> listDebiturAdmin (String userId);
     
-    Future<List<KonsumenAggrement>> listDebiturAgentPos (int idAgent);
+    Future<List<KonsumenAggrement>> listDebiturAgentPos (String userId);
 }
