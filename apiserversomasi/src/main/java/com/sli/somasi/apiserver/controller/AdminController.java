@@ -116,7 +116,7 @@ public class AdminController {
     }
     
     @RequestMapping("/listnodebitur")
-    public Future<APIResult> listNoDebiturAdmin(String userId) {
+    public Future<APIResult> listNoDebiturAdmin(@QueryParam ("userId") String userId) {
         
         Future<APIResult> result = Future.future();
         
