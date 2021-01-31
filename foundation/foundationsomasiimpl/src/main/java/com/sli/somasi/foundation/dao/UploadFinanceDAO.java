@@ -263,7 +263,8 @@ public class UploadFinanceDAO extends CommonDAO{
                     }
                     
                     if(konsumen.getIsCompleted()){
-                        agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
+                        if (konsumen.getZipcodeTinggal()!= null) {
+                            agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
                             .setHandler(ret1 -> {
 
                             if (ret1.succeeded() && ret1.result() != null){
@@ -275,6 +276,21 @@ public class UploadFinanceDAO extends CommonDAO{
                                 assignFinanceDao.add(assign);
                             }
                          });
+                        } else if (konsumen.getZipcodeKtp() != null) {
+                            agentPosDao.getByZipcode(konsumen.getZipcodeKtp().toString())
+                            .setHandler(ret1 -> {
+
+                            if (ret1.succeeded() && ret1.result() != null){
+                                AssignFinance assign = new AssignFinance();
+                                assign.setIdAgentPos(ret1.result().getIdAgentpos());
+                                assign.setAssign_date(new Date());
+                                assign.setNoAggrement(ret.getNoAggrement());
+                                assign.setKonsumenId(ret.getKonsumenId());
+                                assignFinanceDao.add(assign);
+                            }
+                         });
+                        }
+                        
                     }
                     
                     return Future.succeededFuture(resultDTO);
