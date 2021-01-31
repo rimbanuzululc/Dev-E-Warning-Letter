@@ -249,11 +249,9 @@ public class UploadFinanceDAO extends CommonDAO{
             
             konsumen.setIsCompleted(false);
             
-        } else if (konsumen.getAlamatTinggal() == null && konsumen.getAlamatKtp()== null && konsumen.getProvinsiKtp() == null
-                && konsumen.getProvinsiTinggal() == null & konsumen.getKotaTinggal() == null && konsumen.getKotaKtp() == null
-                && konsumen.getKecamatanKtp() == null && konsumen.getKecamatanTinggal() == null && konsumen.getKelurahanKtp() == null 
-                && konsumen.getKelurahanTinggal() == null && konsumen.getZipcodeKtp() == null
-                && konsumen.getZipcodeTinggal() == null) {
+        } else if ((konsumen.getAlamatTinggal() == null && konsumen.getAlamatKtp()== null) || (konsumen.getProvinsiKtp() == null && konsumen.getProvinsiTinggal() == null) 
+                || (konsumen.getKotaTinggal() == null && konsumen.getKotaKtp() == null) || (konsumen.getKecamatanKtp() == null && konsumen.getKecamatanTinggal() == null) 
+                || (konsumen.getKelurahanKtp() == null && konsumen.getKelurahanTinggal() == null) || (konsumen.getZipcodeKtp() == null && konsumen.getZipcodeTinggal() == null)) {
             
             konsumen.setIsCompleted(false);
             
@@ -263,8 +261,8 @@ public class UploadFinanceDAO extends CommonDAO{
         super.insert(konsumen)
                 .compose(ret -> {
                     
-                    if(ret.getIsCompleted()){
-                        if (ret.getZipcodeTinggal()!= null) {
+                        if (ret.getZipcodeTinggal()!= null && ret.getAlamatTinggal() != null && ret.getKecamatanTinggal() != null
+                                && ret.getKelurahanTinggal() != null && ret.getProvinsiTinggal() != null && ret.getKotaTinggal() != null) {
                             agentPosDao.getByZipcode(ret.getZipcodeTinggal().toString())
                             .setHandler(ret1 -> {
 
@@ -277,7 +275,8 @@ public class UploadFinanceDAO extends CommonDAO{
                                 assignFinanceDao.add(assign);
                             }
                          });
-                        } else if (ret.getZipcodeKtp() != null) {
+                        } else if (ret.getZipcodeKtp()!= null && ret.getAlamatKtp() != null && ret.getKecamatanKtp() != null
+                                && ret.getKelurahanKtp() != null && ret.getProvinsiKtp() != null && ret.getKotaKtp() != null) {
                             agentPosDao.getByZipcode(ret.getZipcodeKtp().toString())
                             .setHandler(ret1 -> {
 
@@ -292,7 +291,6 @@ public class UploadFinanceDAO extends CommonDAO{
                          });
                         }
                         
-                    }
                     
                     return Future.succeededFuture(resultDTO);
                 })
