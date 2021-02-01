@@ -2,23 +2,23 @@ package com.sli.somasi.apiserver.dto;
 
 public class LoginResult {
 
-    protected String userId;
-    protected String roleId;
+    protected String accessToken;
+    protected Object user;
 
-    public String getUserId() {
-        return userId;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getRoleId() {
-        return roleId;
+    public Object getUser() {
+        return user;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setUser(Object user) {
+        this.user = user;
     }
 
     

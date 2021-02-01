@@ -22,19 +22,19 @@ public class SecurityHandler  implements Handler<RoutingContext> {
 
     protected Logger logger = Logger.getLogger(this.getClass());
     
-    @Config("ecommerce.restapi.allowedURL.ALL")
+    @Config("warning_letter.restapi.allowedURL.ALL")
     protected JsonArray allowedALLList;
     
-    @Config("ecommerce.restapi.allowedURL.GET")
+    @Config("warning_letter.restapi.allowedURL.GET")
     protected JsonArray allowedGETList;
     
-    @Config("ecommerce.restapi.allowedURL.POST")
+    @Config("warning_letter.restapi.allowedURL.POST")
     protected JsonArray allowedPOSTList;
     
-    @Config("ecommerce.restapi.allowedURL.PUT")
+    @Config("warning_letter.restapi.allowedURL.PUT")
     protected JsonArray allowedPUTList;
     
-    @Config("ecommerce.restapi.allowedURL.DELETE")
+    @Config("warning_letter.restapi.allowedURL.DELETE")
     protected JsonArray allowedDELETEList;
     
     @AutoWired

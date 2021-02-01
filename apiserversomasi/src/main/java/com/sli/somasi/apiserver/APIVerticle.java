@@ -9,7 +9,7 @@ import io.starlight.http.EnableWebServer;
  *
  * @author denny
  */
-@EnableWebServer(port = "${ecommerce.restapi.port}", preHandler = {SecurityHandler.class})
+@EnableWebServer(port = "${warning_letter.restapi.port}", preHandler = {SecurityHandler.class})
 public class APIVerticle extends StarlightVerticle {
 
     protected Logger logger = Logger.getLogger(this.getClass());

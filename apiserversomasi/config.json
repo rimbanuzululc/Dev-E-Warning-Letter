@@ -1,7 +1,7 @@
 {
     "mainVerticle" : "com.sli.somasi.apiserver.APIVerticle",
     "display" : "Commerce API Server",
-    "ecommerce": {
+    "warning_letter": {
 
         "restapi" : {
             
@@ -16,12 +16,11 @@
                                             "/*/lib/*",
                                             "/*/img/*",
                                             "/*/css/*",
-                                            "/user/test$",
-                                            "/*/user/login",
+                                            "/user/login",
                                             "/*/konsumen/*",
-                                            "/*/sli/",
                                             "/*/upload/*",
-                                            "/*/agentpos/*",
+                                            "/*/agentpos/login",
+                                            "/*/agentpos/update/password",
                                             "/*/mapping/*",
                                             "/*/status/*",
                                             "/*/img/*",
@@ -30,7 +29,6 @@
                                             "/*/kapos/*"
                                         ],
                                 "GET" : [
-                                          "/",
                                           "/menu/*",
                                           "/role/*",
                                           "/user/*"
@@ -46,9 +44,6 @@
                                             "/user/*"  
                                         ], 
                                 "DELETE" : [
-                                             "/role/*",
-                                          "/user/*",
-                                          "/menu/*"
                                         ]
                             }
         }

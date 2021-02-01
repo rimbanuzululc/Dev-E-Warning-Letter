@@ -66,8 +66,8 @@ public class UserController {
                 if (ret.succeeded()) {
                     
                     LoginResult loginResult = new LoginResult();
-                    loginResult.setRoleId(String.valueOf(ret.result().getRoleId()));
-                    loginResult.setUserId(ret.result().getUserId());
+                    loginResult.setAccessToken(tokenService.generateToken(request.getUserId()));
+                    loginResult.setUser(ret.result());
                     result.setResult(loginResult);
                     future.complete(result);
                 }

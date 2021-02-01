@@ -6,6 +6,8 @@
 package com.sli.somasi.apiserver.controller;
 
 import com.sli.somasi.apiserver.dto.APIResult;
+import com.sli.somasi.apiserver.dto.LoginResult;
+import com.sli.somasi.apiserver.service.TokenService;
 import com.sli.somasi.foundation.CodedException;
 import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.AssignDTO;
@@ -29,6 +31,9 @@ import io.vertx.core.json.Json;
  */
 @RestController(value = "/agentpos")
 public class AgentPosController {
+    
+    @AutoWired
+    TokenService tokenService;
     
     @AutoWired
     AgentPosService service;
@@ -181,7 +186,12 @@ public class AgentPosController {
                     APIResult apiResult = new APIResult();
                     
                     if (ret.succeeded()) {
-                        apiResult.setResult(ret.result());
+                        
+                        LoginResult loginResult = new LoginResult();
+                        loginResult.setAccessToken(tokenService.generateToken(ret.result().getIdAgentpos().toString()));
+                        loginResult.setUser(ret.result());
+                        
+                        apiResult.setResult(loginResult);
                     } else {
                         apiResult.error(ret.cause());
                         result.complete(apiResult);
