@@ -84,6 +84,11 @@ public class AssignFinanceDAO extends CommonDAO{
         return queryScriptWihtParam("listNoDebitur", AssignFinance.class, "userId", userId);
     }
      
+     public Future<List<AssignFinance>> listAllNoDebitur() {
+       
+        return queryScriptWihtParam("listAllNoDebitur", AssignFinance.class);
+    }
+     
      public Future<List<AssignFinance>> reportSendDebitur(int idAgent) {
        
         return queryScriptWihtParam("reportSendDebitur", AssignFinance.class, "id", idAgent);
@@ -132,5 +137,10 @@ public class AssignFinanceDAO extends CommonDAO{
     public Future<List<AssignFinance>> reportSendDebiturforAdmin (String userId) {
         
         return queryScriptWihtParam("reportSendDebiturforAdmin", AssignFinance.class, "userId", userId);
+    }
+    
+    public Future<List<AssignFinance>> reportAllSendDebitur() {
+        
+        return queryScriptWihtParam("reportAllSendDebitur", AssignFinance.class);
     }
 }

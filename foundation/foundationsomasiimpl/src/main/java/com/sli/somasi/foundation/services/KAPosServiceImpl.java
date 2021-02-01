@@ -37,4 +37,9 @@ public class KAPosServiceImpl implements KAPosService{
     public Future<List<ConfirmKAPos>> reportVerifikasiForAdmin(String userId) {
         return dao.reportVerifikasiforAdmin(userId);
     }
+    
+    @Override
+    public Future<List<ConfirmKAPos>> reportAllVerifikasi() {
+        return dao.reportAllVerifikasi();
+    }
 }

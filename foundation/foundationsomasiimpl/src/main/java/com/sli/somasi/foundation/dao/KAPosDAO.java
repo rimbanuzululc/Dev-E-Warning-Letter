@@ -69,4 +69,33 @@ public class KAPosDAO extends CommonDAO{
                 });
         return result;
     }
+    
+    public Future<List<ConfirmKAPos>> reportAllVerifikasi() {
+        
+        Future<List<ConfirmKAPos>> result = Future.future();
+        
+        List<ConfirmKAPos> list = new ArrayList<>();
+        
+        queryScriptWihtParam("reportAllVerifikasi", ConfirmKAPos.class)
+                .setHandler(ret -> {
+                    
+                    if (ret.succeeded() && ret.result().size() > 0) {
+                            
+                        for (int i = 0; i < ret.result().size(); i++) {
+                            
+                            if (ret.result().get(i).getIdConfirmKapos() != null) {
+                                
+                                list.add(ret.result().get(i));
+                            }
+                        }
+                        
+                       result.complete(list);
+                        
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                    
+                });
+        return result;
+    }
 }

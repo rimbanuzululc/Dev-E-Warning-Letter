@@ -137,4 +137,67 @@ public class AdminController {
         
         return result;
     }
+    
+    @RequestMapping("/reportallkapos")
+    public Future<APIResult> reportAllKAPos() {
+        
+        Future<APIResult> result = Future.future();
+        
+        kapos.reportAllVerifikasi()
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/reportallsenddebitur")
+    public Future<APIResult> reportAllSendDebitur() {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.reportAllSendDebitur()
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/listallnodebitur")
+    public Future<APIResult> listAllNoDebitur() {
+        
+        Future<APIResult> result = Future.future();
+        
+        assignService.listAllNoDebitur()
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
 }

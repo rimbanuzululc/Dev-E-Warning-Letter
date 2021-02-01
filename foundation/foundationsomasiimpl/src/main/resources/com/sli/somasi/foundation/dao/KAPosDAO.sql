@@ -29,3 +29,13 @@ left join somasi_agentpos sa on sm.districtid = sa.districtid
 left join somasi_confirmkapos sc on sa.idagentpos = sc.idagentpos 
 left join somasi_konsumen sk on sc.konsumenid = sk.konsumenid 
 where sm.userid = {{userId}}
+
+--reportAllVerifikasi
+select 
+sc.*,
+sk.namadebitur,
+sk.notelp as noDebitur,
+sk.noAggrement 
+from somasi_agentpos sa
+left join somasi_confirmkapos sc on sa.idagentpos = sc.idagentpos 
+left join somasi_konsumen sk on sc.konsumenid = sk.konsumenid 

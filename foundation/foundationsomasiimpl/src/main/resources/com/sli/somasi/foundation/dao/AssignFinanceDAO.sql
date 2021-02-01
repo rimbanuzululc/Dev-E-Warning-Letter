@@ -10,6 +10,11 @@ left join somasi_agentpos a on a.districtid = sm.districtid
 left join somasi_assignfinance af on a.idagentpos = af.idagentpos 
 where sm.userid = {{userId}}
 
+--listAllNoDebitur
+select af.* from somasi_assignfinance af
+left join somasi_agentpos a on a.idagentpos = af.idagentpos
+where nodebitur is not null
+
 --getAssign
 select * from somasi_assignfinance sa where idagentpos = {{idAgent}} and konsumenid = {{idkonsumen}}
 
@@ -50,3 +55,10 @@ left join somasi_agentpos sa on sm.districtid = sa.districtid
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
 left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
 where sm.userid =  {{userId}}
+
+--reportAllSendDebitur
+select
+af.*,
+sk.*
+from somasi_assignfinance af
+left join somasi_konsumen sk on af.konsumenid = sk.konsumenid
