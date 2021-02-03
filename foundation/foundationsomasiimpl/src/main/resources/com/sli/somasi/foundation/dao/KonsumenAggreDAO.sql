@@ -115,8 +115,3 @@ where sm.userid = {{userId}}
 select * from somasi_konsumen k
 left join somasi_assignfinance af on af.konsumenid = k.konsumenid
 where af.idagentpos = {{id}} and (af.sp = true or af.spt = true) and af.print = true
-
---listAllDebitur
-select
-* from 
-somasi_konsumen where iscompleted = true
