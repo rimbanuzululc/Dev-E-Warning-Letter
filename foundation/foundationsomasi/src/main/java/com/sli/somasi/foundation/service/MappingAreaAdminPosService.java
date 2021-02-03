@@ -15,5 +15,6 @@ import io.vertx.core.Future;
 public interface MappingAreaAdminPosService {
     
     Future<MappingAreaAdminPos> add (MappingAreaAdminPos adminPos);
+    Future<MappingAreaAdminPos> update (MappingAreaAdminPos adminPos);
     
 }

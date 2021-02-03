@@ -50,6 +50,28 @@ public class KonsumenAggreController {
         return result;
     }
     
+    @RequestMapping(value = "/update", method = HttpMethod.PUT)
+    public Future<APIResult> update (@RequestBody KonsumenAggrement konsumen) {
+        
+       Future<APIResult> result = Future.future();
+       
+       service.update(konsumen)
+               .setHandler(ret -> {
+                   
+                APIResult apiResult = new APIResult();
+                
+                if (ret.succeeded()) {
+                    
+                    apiResult.setResult(ret.result());
+                } else {
+                    apiResult.setErrorMsg("Gagal Add Konsumen");
+                }
+               
+                result.complete(apiResult);
+               });
+        return result;
+    }
+    
     @RequestMapping(value = "/list")
     public Future<APIResult> list () {
         

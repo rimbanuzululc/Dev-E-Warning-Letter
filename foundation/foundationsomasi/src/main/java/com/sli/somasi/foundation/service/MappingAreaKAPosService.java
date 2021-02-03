@@ -18,6 +18,7 @@ import java.util.List;
 public interface MappingAreaKAPosService {
     
     Future<MappingAreaKAPos> add (MappingAreaKAPos area);
+    Future<MappingAreaKAPos> update (MappingAreaKAPos area);
     Future<Boolean> delete (Integer id);
     Future<List<MappingAreaKAPos>> list();
     Future<List<District>> listDistByArea (int id);

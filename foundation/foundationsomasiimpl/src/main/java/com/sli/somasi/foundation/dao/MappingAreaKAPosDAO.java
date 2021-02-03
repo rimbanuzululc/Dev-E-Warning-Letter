@@ -35,6 +35,23 @@ public class MappingAreaKAPosDAO extends CommonDAO {
         return result;
     }
     
+    public Future<MappingAreaKAPos> update (MappingAreaKAPos area) {
+        
+        Future<MappingAreaKAPos> result = Future.future();
+        
+        update(area)
+                .setHandler(ret -> {
+                    
+                    if (ret.succeeded()) {
+                            result.complete(ret.result());
+                    } else {
+                            result.complete(ret.result());
+                    }
+                
+                });
+        return result;
+    }
+    
     public Future<List<MappingAreaKAPos>> list () {
         return queryScript("listMappingArea", MappingAreaKAPos.class);
     }

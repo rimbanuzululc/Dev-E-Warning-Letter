@@ -33,5 +33,22 @@ public class MappingAreaAdminPosDAO extends CommonDAO {
                 });
         return result;
     }
+     
+     public Future<MappingAreaAdminPos> update (MappingAreaAdminPos area) {
+        
+        Future<MappingAreaAdminPos> result = Future.future();
+        
+        update(area)
+                .setHandler(ret -> {
+                    
+                    if (ret.succeeded()) {
+                            result.complete(ret.result());
+                    } else {
+                            result.complete(ret.result());
+                    }
+                
+                });
+        return result;
+    }
     
 }

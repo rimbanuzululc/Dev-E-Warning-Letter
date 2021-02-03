@@ -21,6 +21,7 @@ import javax.xml.soap.Detail;
 public interface KonsumenAggrementService {
     
     Future<KonsumenAggrement> add (KonsumenAggrement aggremnt);
+    Future<KonsumenAggrement> update (KonsumenAggrement aggremnt);
     
     Future<List<KonsumenAggrement>> list ();
     

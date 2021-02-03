@@ -90,4 +90,44 @@ public class MappingAreaController {
                 });
         return result;
     }
+    
+    @RequestMapping(value = "/kapos", method = HttpMethod.PUT)
+    public Future<APIResult> update (@RequestBody MappingAreaKAPos mappingArea) {
+        Future<APIResult> result = Future.future();
+        
+        area.update(mappingArea)
+                .setHandler(ret -> {
+                    
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        apiResult.setResult(ret.result());
+                    } else {
+                        apiResult.setResult("Eror!!");
+                    }
+                    
+                    result.complete(apiResult);
+                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/admin", method = HttpMethod.PUT)
+    public Future<APIResult> updateAdmin (@RequestBody MappingAreaAdminPos mappingArea) {
+        Future<APIResult> result = Future.future();
+        
+        areaAdmin.update(mappingArea)
+                .setHandler(ret -> {
+                    
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        apiResult.setResult(ret.result());
+                    } else {
+                        apiResult.setResult("Eror!!");
+                    }
+                    
+                    result.complete(apiResult);
+                });
+        return result;
+    }
 }

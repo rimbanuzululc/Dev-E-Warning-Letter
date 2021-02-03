@@ -27,4 +27,9 @@ public class MappingAreaAdminPosServiceImpl implements MappingAreaAdminPosServic
         return adminPosDAO.add(adminPos);
     }
     
+    @Override
+    public Future<MappingAreaAdminPos> update(MappingAreaAdminPos adminPos) {
+        return adminPosDAO.update(adminPos);
+    }
+    
 }
