@@ -26,7 +26,8 @@
                                             "/*/img/*",
                                             "/*/wilayah/*",
                                             "/*/admin/*",
-                                            "/*/kapos/*"
+                                            "/*/kapos/*",
+                                            "/*/agentpos/*"
                                         ],
                                 "GET" : [
                                           "/menu/*",

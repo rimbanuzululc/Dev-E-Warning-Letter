@@ -33,6 +33,11 @@ public class MappingAreaKAPosServiceImpl implements MappingAreaKAPosService {
     public Future<MappingAreaKAPos> update(MappingAreaKAPos area) {
         return dao.update(area);
     }
+    
+    @Override
+    public Future<MappingAreaKAPos> getById(int id) {
+        return dao.getById(id);
+    }
 
     @Override
     public Future<Boolean> delete(Integer id) {

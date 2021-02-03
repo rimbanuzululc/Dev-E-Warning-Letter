@@ -419,6 +419,11 @@ public class AgentPosServiceImpl implements AgentPosService{
     public Future<AgentPos> edit(AgentPos agentPos) {
         return dao.edit(agentPos);
     }
+    
+    @Override
+    public Future<AgentPos> getById(int idAgentPos) {
+        return dao.getById(idAgentPos);
+    }
 
     @Override
     public Future<OTP> sendOTP (OTP otp) {

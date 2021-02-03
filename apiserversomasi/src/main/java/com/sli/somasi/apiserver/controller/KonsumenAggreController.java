@@ -10,6 +10,7 @@ import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.service.KonsumenAggrementService;
 import io.starlight.AutoWired;
+import io.starlight.http.PathParam;
 import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
@@ -236,6 +237,26 @@ public class KonsumenAggreController {
         Future<APIResult> result = Future.future();
        
        service.listUnCompleted()
+               .setHandler(ret -> {
+                   
+                APIResult aPIResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        aPIResult.setResult(ret.result());
+                    } else {
+                        aPIResult.error(Errors.COMMON, "" + ret.cause());
+                    }
+                    result.complete(aPIResult);
+                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/byid/:id")
+    public Future<APIResult> getById (@PathParam ("id") int id) {
+        
+        Future<APIResult> result = Future.future();
+       
+       service.getById(id)
                .setHandler(ret -> {
                    
                 APIResult aPIResult = new APIResult();

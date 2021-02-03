@@ -17,6 +17,7 @@ import com.sli.somasi.foundation.service.AgentPosService;
 import com.sli.somasi.foundation.service.AssignFinanceService;
 import com.sli.somasi.foundation.service.KonsumenAggrementService;
 import io.starlight.AutoWired;
+import io.starlight.http.PathParam;
 import io.starlight.http.QueryParam;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
@@ -366,6 +367,27 @@ public class AgentPosController {
         Future<APIResult> result = Future.future();
         
         konsumenAggreService.listDebiturAgentPos(idAgent)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
+    @RequestMapping("/byid/:id")
+    public Future<APIResult> getById (@PathParam ("id") int idAgentPos) {
+        
+        Future<APIResult> result = Future.future();
+        
+        service.getById(idAgentPos)
             .setHandler(ret -> {
 
                 APIResult apiResult = new APIResult();

@@ -82,9 +82,12 @@ public class AgentPosDAO extends CommonDAO {
         return queryScript("list", AgentPos.class);
     }
     
-    public Future<List<AgentPos>> getById (int id) {
+    public Future<AgentPos> getById(int id){
         
-        return queryScriptWihtParam("getById", AgentPos.class, "id", id);
+        AgentPos agentPos = new AgentPos();
+        agentPos.setIdAgentpos(id);
+        
+        return selectOne(agentPos);
     }
     
     public Future<AgentPos> update (AgentPos agentPos) {

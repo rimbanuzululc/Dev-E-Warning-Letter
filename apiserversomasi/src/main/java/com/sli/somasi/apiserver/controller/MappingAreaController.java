@@ -11,6 +11,7 @@ import com.sli.somasi.foundation.dto.MappingAreaKAPos;
 import com.sli.somasi.foundation.service.MappingAreaAdminPosService;
 import com.sli.somasi.foundation.service.MappingAreaKAPosService;
 import io.starlight.AutoWired;
+import io.starlight.http.PathParam;
 import io.starlight.http.RequestBody;
 import io.starlight.http.RequestMapping;
 import io.starlight.http.RestController;
@@ -116,6 +117,46 @@ public class MappingAreaController {
         Future<APIResult> result = Future.future();
         
         areaAdmin.update(mappingArea)
+                .setHandler(ret -> {
+                    
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        apiResult.setResult(ret.result());
+                    } else {
+                        apiResult.setResult("Eror!!");
+                    }
+                    
+                    result.complete(apiResult);
+                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/byid/:id")
+    public Future<APIResult> getById (@PathParam ("id") int id) {
+        Future<APIResult> result = Future.future();
+        
+        area.getById(id)
+                .setHandler(ret -> {
+                    
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded()) {
+                        apiResult.setResult(ret.result());
+                    } else {
+                        apiResult.setResult("Eror!!");
+                    }
+                    
+                    result.complete(apiResult);
+                });
+        return result;
+    }
+    
+    @RequestMapping(value = "/byid/:id")
+    public Future<APIResult> getByIdAdmin (@PathParam ("id") int id) {
+        Future<APIResult> result = Future.future();
+        
+        areaAdmin.getById(id)
                 .setHandler(ret -> {
                     
                     APIResult apiResult = new APIResult();

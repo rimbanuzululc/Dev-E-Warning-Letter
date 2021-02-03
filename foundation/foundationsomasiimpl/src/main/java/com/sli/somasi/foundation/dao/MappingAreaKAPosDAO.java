@@ -52,6 +52,15 @@ public class MappingAreaKAPosDAO extends CommonDAO {
         return result;
     }
     
+    public Future<MappingAreaKAPos> getById (int id) {
+        
+        MappingAreaKAPos areaKapos = new MappingAreaKAPos();
+        areaKapos.setIdMappingArea(id);
+
+        return super.selectOne(areaKapos);
+        
+    }
+    
     public Future<List<MappingAreaKAPos>> list () {
         return queryScript("listMappingArea", MappingAreaKAPos.class);
     }

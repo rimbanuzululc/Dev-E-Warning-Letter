@@ -22,6 +22,7 @@ public interface KonsumenAggrementService {
     
     Future<KonsumenAggrement> add (KonsumenAggrement aggremnt);
     Future<KonsumenAggrement> update (KonsumenAggrement aggremnt);
+    Future<KonsumenAggrement> getById (int id);
     
     Future<List<KonsumenAggrement>> list ();
     

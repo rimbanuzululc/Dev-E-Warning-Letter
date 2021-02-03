@@ -44,6 +44,11 @@ public class KonsumenAggreServiceImpl implements KonsumenAggrementService {
     public Future<KonsumenAggrement> update(KonsumenAggrement aggremnt) {
         return aggreDAO.update(aggremnt);
     }
+    
+    @Override
+    public Future<KonsumenAggrement> getById (int id) {
+        return aggreDAO.getByIds(id);
+    }
 
     @Override
     public Future<List<KonsumenAggrement>> list() {

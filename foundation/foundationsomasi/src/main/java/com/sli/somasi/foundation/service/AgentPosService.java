@@ -35,6 +35,7 @@ public interface AgentPosService {
     Future<List<AgentPos>> search (int id);
     
     Future<AgentPos> edit (AgentPos agentPos);
+    Future<AgentPos> getById (int idAgentPos);
     
     Future<OTP> sendOTP (OTP otp);
     

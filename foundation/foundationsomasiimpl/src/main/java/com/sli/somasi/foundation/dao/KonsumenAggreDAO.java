@@ -70,6 +70,14 @@ public class KonsumenAggreDAO extends CommonDAO{
         return queryScriptWihtParam("getbyId", KonsumenAggrement.class, "id", id);
     }
     
+    public Future<KonsumenAggrement> getByIds (int id) {
+        
+        KonsumenAggrement konsumen = new KonsumenAggrement();
+        konsumen.setKonsumenId(id);
+        
+        return selectOne(konsumen);
+    }
+    
     public Future<List<KonsumenAggrement>> search (String param, String filter, String startDate, String endDate, int page) {
         
         int rowPerPage = 10;

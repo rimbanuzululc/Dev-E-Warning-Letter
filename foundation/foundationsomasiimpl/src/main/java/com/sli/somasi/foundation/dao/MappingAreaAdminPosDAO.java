@@ -50,5 +50,13 @@ public class MappingAreaAdminPosDAO extends CommonDAO {
                 });
         return result;
     }
+     
+    public Future<MappingAreaAdminPos> getById (int id) {
+        
+        MappingAreaAdminPos areaAdmin = new MappingAreaAdminPos();
+        areaAdmin.setIdMappingAreaAdmin(id);
+        
+        return super.selectOne(areaAdmin);
+    }
     
 }

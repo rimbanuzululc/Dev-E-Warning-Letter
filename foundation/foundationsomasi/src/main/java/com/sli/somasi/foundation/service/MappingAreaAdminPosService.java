@@ -16,5 +16,6 @@ public interface MappingAreaAdminPosService {
     
     Future<MappingAreaAdminPos> add (MappingAreaAdminPos adminPos);
     Future<MappingAreaAdminPos> update (MappingAreaAdminPos adminPos);
+    Future<MappingAreaAdminPos> getById (int id);
     
 }

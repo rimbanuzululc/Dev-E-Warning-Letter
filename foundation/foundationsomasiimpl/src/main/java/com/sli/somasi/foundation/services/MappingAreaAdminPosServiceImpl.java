@@ -32,4 +32,9 @@ public class MappingAreaAdminPosServiceImpl implements MappingAreaAdminPosServic
         return adminPosDAO.update(adminPos);
     }
     
+    @Override
+    public Future<MappingAreaAdminPos> getById(int id) {
+        return adminPosDAO.getById(id);
+    }
+    
 }
