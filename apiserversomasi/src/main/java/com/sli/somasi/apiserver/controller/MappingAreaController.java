@@ -152,7 +152,7 @@ public class MappingAreaController {
         return result;
     }
     
-    @RequestMapping(value = "/byid/:id")
+    @RequestMapping(value = "/byidAdmin/:id")
     public Future<APIResult> getByIdAdmin (@PathParam ("id") int id) {
         Future<APIResult> result = Future.future();
         
