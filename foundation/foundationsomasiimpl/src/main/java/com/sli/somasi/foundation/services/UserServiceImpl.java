@@ -65,6 +65,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Future<User> update(User user) {
         
+        Future<User> result = Future.future();
+        
         String password = user.getPassword();
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -73,23 +75,32 @@ public class UserServiceImpl implements UserService {
             String encoded = new BigInteger(1,digest.digest()).toString(16);
             user.setPassword(encoded);
             
+            dao.getById(user.getUserId())
+            .setHandler(ret -> {
+                
+                if (ret.succeeded() && (ret.result() != null)) { 
+                        Date date = new Date();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.DATE, 90);
+
+                        user.setModify(date);
+                        user.setExpired(calendar.getTime());
+
+                        dao.update(user);
+                        result.complete(user);
+                        
+                    } else
+                        result.fail(new CodedException(Errors.LOGIN_USER_NOT_FOUND));
+                });
+            
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, 90);
+        return result;
         
-        user.setModify(date);
-        user.setExpired(calendar.getTime());
-        
-        return dao.update(user);
     }
-
-   
-
     @Override
     public Future<User> get(String userId) {
         

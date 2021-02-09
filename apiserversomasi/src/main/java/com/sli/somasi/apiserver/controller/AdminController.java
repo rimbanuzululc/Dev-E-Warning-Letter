@@ -33,8 +33,8 @@ public class AdminController {
     @AutoWired
     KonsumenAggrementService konsumenAggreService;
     
-    @RequestMapping(value = "", method = HttpMethod.PUT)
-    public Future<APIResult> update(@RequestBody AssignFinance assignFinance) {
+    @RequestMapping(value = "/assign", method = HttpMethod.PUT)
+    public Future<APIResult> updateAssign(@RequestBody AssignFinance assignFinance) {
         
         Future<APIResult> result = Future.future();
         
