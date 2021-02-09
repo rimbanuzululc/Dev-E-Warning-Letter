@@ -200,4 +200,25 @@ public class AdminController {
         
         return result;
     }
+    
+    @RequestMapping("/listalldebitur")
+    public Future<APIResult> listAllDebitur() {
+        
+        Future<APIResult> result = Future.future();
+        
+        konsumenAggreService.listAllDebitur()
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
 }

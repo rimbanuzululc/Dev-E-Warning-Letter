@@ -182,4 +182,8 @@ public class KonsumenAggreDAO extends CommonDAO{
         return queryScriptWihtParam("listDebiturAgentPos", KonsumenAggrement.class, "id", idAgent);
     }
     
+    public Future<List<KonsumenAggrement>> listAllDebitur() {
+        return queryScript("listAllDebitur", KonsumenAggrement.class);
+    }
+    
 }
