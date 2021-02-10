@@ -8,9 +8,16 @@ package com.sli.somasi.foundation.services;
 import com.sli.somasi.foundation.dao.ImageKonsumenFinanceDAO;
 import com.sli.somasi.foundation.dto.ImageKonsumenFinance;
 import com.sli.somasi.foundation.service.ImageKonsumenFinanceService;
+import com.sli.somasi.foundation.util.ImageCompressor;
 import io.starlight.AutoWired;
 import io.starlight.Service;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
+import static io.vertx.core.Vertx.vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.file.FileSystem;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -30,6 +37,8 @@ import javax.imageio.ImageIO;
 @Service
 public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceService{
 
+    public final static Logger logger = LoggerFactory.getLogger(ImageCompressor.class);
+    
     @AutoWired
     ImageKonsumenFinanceDAO financeDAO;
     
@@ -38,63 +47,79 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
         Date date = new Date();
         finance.setCreated(date);
         
-        String encodedBase64 = null;
-        String targetFolderString = "D:/SLI/e-WL/"+finance.getKonsumenid();
-        File targetFolder = new File(targetFolderString);
-        String base64String = finance.getImageFile();
-        BufferedImage image = null;
-        String fileOutput = targetFolder+"/"+finance.getImageName();
+        FileSystem fs = Vertx.currentContext().owner().fileSystem();
         
-        if (targetFolder.exists()) {
+        String targetFolderString = "D:/SLI/e-WL/"+finance.getKonsumenid()+"/"+finance.getImageName();
+        String folderKonsumen = "D:/SLI/e-WL/"+finance.getKonsumenid();
+        String tempTargetFolder = "D:/SLI/e-WL/temp/";
+        File targetFolder = new File(folderKonsumen);
+        
+        float quality = 1.0f;
+        
+        if (!fs.existsBlocking(tempTargetFolder)) {
+            fs.mkdirBlocking(tempTargetFolder);
+        }
+        
+        tempTargetFolder = "D:/SLI/e-WL/temp/"+new Date().getTime()+""+((int)(Math.random()*100))+".jpg";
+        
+        Buffer data = Buffer.buffer(Base64.getDecoder().decode(finance.getImageFile()));
+        
+        fs.writeFileBlocking(tempTargetFolder, data);
+        
+        final String input = tempTargetFolder;
+        final String output = targetFolderString;
+        
+        if (fs.existsBlocking(folderKonsumen)) {
             
-            if (targetFolder.isDirectory()) {
+            if (fs.readDirBlocking(folderKonsumen).size() > 0) {
                 
                 String targetName = "";
                 for(File file : targetFolder.listFiles()){
                     
                     String fileName = file.getName();
-                    if(fileName.equalsIgnoreCase(finance.getImageName()))
-                    {
+                    if(fileName.equalsIgnoreCase(finance.getImageName())){
+                        
                         targetName = file.getName();
                         File fldr = new File(targetFolder+"/"+targetName);
-                        String fileOut = targetFolder+"/"+targetName;
                         fldr.delete(); 
-                        try (FileOutputStream outputStream = new FileOutputStream(fileOut)){
-                            byte[] decodedBytes = Base64.getMimeDecoder().decode(base64String);
-                            
-                            outputStream.write(decodedBytes);
-
-                        } catch (IOException ex) {
-                        }
-                          break;
+                        
+                        ImageCompressor.compress(vertx(), input, output, quality
+                                , 50, 1200, true)
+                                .compose(ret -> {
+                                    
+                                    logger.info("File temp : "+input);
+                                    fs.deleteRecursiveBlocking(input, true);
+                                
+                                    return Future.succeededFuture();
+                                });
+                        
                     } else {
                         
-                        File f= new File(targetFolder+"/"+finance.getImageName());
-                        try (FileOutputStream outputStream = new FileOutputStream(fileOutput)){
-                            byte[] decodedBytes = Base64.getMimeDecoder().decode(base64String);
-
-                            outputStream.write(decodedBytes);
-
-                        } catch (IOException ex) {
-                        }
+                        ImageCompressor.compress(vertx(), input, output, quality
+                                , 50, 1200, true)
+                                .compose(ret -> {
+                                    
+                                    logger.info("File temp : "+input);
+                                    fs.deleteRecursiveBlocking(input, true);
+                                
+                                    return Future.succeededFuture();
+                                });
                     }
                 }  
             }
             
         } else {
-            if (targetFolder.mkdirs()) {
-                
-                File f1 = new File(targetFolder+"/"+finance.getImageName());
-                try (FileOutputStream outputStream = new FileOutputStream(fileOutput)){
-                            byte[] decodedBytes = Base64.getMimeDecoder().decode(base64String);
-
-                            outputStream.write(decodedBytes);
-
-                        } catch (IOException ex) {
-                        }
-                
-            } else {
-            }
+            fs.mkdirBlocking(folderKonsumen);      
+            
+            ImageCompressor.compress(vertx(), input, output, quality
+                                , 50, 1200, true)
+                                .compose(ret -> {
+                                    
+                                    logger.info("File temp : "+input);
+                                    fs.deleteRecursiveBlocking(input, true);
+                                
+                                    return Future.succeededFuture();
+                                });
         }
         
         finance.setImagePath(targetFolderString);

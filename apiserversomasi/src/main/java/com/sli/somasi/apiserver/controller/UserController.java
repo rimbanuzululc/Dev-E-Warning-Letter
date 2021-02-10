@@ -198,7 +198,7 @@ public class UserController {
         return result;
     }
     
-    @RequestMapping(value="/hakakses/:id", method = HttpMethod.POST)
+    @RequestMapping(value="/hakakses/:id", method = HttpMethod.GET)
     public Future<APIResult> hakAkses(@PathParam("id") String userId) {
         
         Future<APIResult> result = Future.future();
