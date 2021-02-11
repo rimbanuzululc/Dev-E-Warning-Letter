@@ -44,11 +44,9 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
     
     @Override
     public Future<ImageKonsumenFinance> add(ImageKonsumenFinance finance) {
-        Date date = new Date();
-        finance.setCreated(date);
         
         FileSystem fs = Vertx.currentContext().owner().fileSystem();
-        
+        Boolean exist = false;
         String targetFolderString = "D:/SLI/e-WL/"+finance.getKonsumenid()+"/"+finance.getImageName();
         String folderKonsumen = "D:/SLI/e-WL/"+finance.getKonsumenid();
         String tempTargetFolder = "D:/SLI/e-WL/temp/";
@@ -69,16 +67,17 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
         final String input = tempTargetFolder;
         final String output = targetFolderString;
         
+        finance.setImagePath(targetFolderString);
+        finance.setImageFile("");
+        
         if (fs.existsBlocking(folderKonsumen)) {
-            
             if (fs.readDirBlocking(folderKonsumen).size() > 0) {
-                
                 String targetName = "";
                 for(File file : targetFolder.listFiles()){
                     
                     String fileName = file.getName();
                     if(fileName.equalsIgnoreCase(finance.getImageName())){
-                        
+                        exist = true;
                         targetName = file.getName();
                         File fldr = new File(targetFolder+"/"+targetName);
                         fldr.delete(); 
@@ -89,22 +88,22 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
                                     
                                     logger.info("File temp : "+input);
                                     fs.deleteRecursiveBlocking(input, true);
-                                
+                                    financeDAO.update(finance);
                                     return Future.succeededFuture();
                                 });
-                        
-                    } else {
-                        
-                        ImageCompressor.compress(vertx(), input, output, quality
+                    }
+                
+                }
+                if (!exist){
+                    ImageCompressor.compress(vertx(), input, output, quality
                                 , 50, 1200, true)
                                 .compose(ret -> {
                                     
                                     logger.info("File temp : "+input);
                                     fs.deleteRecursiveBlocking(input, true);
-                                
+                                    financeDAO.add(finance);
                                     return Future.succeededFuture();
                                 });
-                    }
                 }  
             }
             
@@ -117,15 +116,13 @@ public class ImageKonsumenFinanceServiceImpl implements ImageKonsumenFinanceServ
                                     
                                     logger.info("File temp : "+input);
                                     fs.deleteRecursiveBlocking(input, true);
-                                
+                                    financeDAO.add(finance);
                                     return Future.succeededFuture();
                                 });
         }
         
-        finance.setImagePath(targetFolderString);
-        finance.setImageFile("");
         
-        return financeDAO.add(finance);
+        return Future.succeededFuture(finance);
     }
 
     @Override

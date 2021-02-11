@@ -10,6 +10,7 @@ import io.starlight.db.CommonDAO;
 import io.starlight.db.DAO;
 import io.vertx.core.Future;
 import io.vertx.core.json.Json;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
 public class ImageKonsumenFinanceDAO extends CommonDAO {
     
     public Future<ImageKonsumenFinance> add (ImageKonsumenFinance finance) {
+        Date date = new Date();
+        finance.setCreated(date);
         
         Future<ImageKonsumenFinance> result = Future.future();
         
@@ -32,6 +35,32 @@ public class ImageKonsumenFinanceDAO extends CommonDAO {
                         result.fail(ret.cause());
                     }
                 });
+        return result;
+    }
+    
+    public Future<ImageKonsumenFinance> update (ImageKonsumenFinance finance) {
+        
+        Date date = new Date();
+        
+        Future<ImageKonsumenFinance> result = Future.future();
+        
+        queryScriptSingleWithParam("checkKonsumenImage", ImageKonsumenFinance.class, "konsumenId", finance.getKonsumenid(), "imageName", finance.getImageName())
+                .setHandler(ret ->{
+                    if (ret.succeeded() && ret.result() != null){
+                        finance.setIdKonsumenFinance(ret.result().getIdKonsumenFinance());
+                        finance.setModifiedDate(date);
+                        super.update(finance)
+                                .setHandler(ret2 -> {
+                    
+                                    if (ret.succeeded()) {
+                                        result.complete(ret2.result());
+                                    } else {
+                                        result.fail(ret2.cause());
+                                    }
+                                });
+                    }
+                });
+        
         return result;
     }
     

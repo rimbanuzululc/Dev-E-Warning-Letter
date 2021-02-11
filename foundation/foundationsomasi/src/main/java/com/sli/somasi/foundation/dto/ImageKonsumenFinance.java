@@ -30,6 +30,9 @@ public class ImageKonsumenFinance {
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Jakarta")
     protected Date created;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Jakarta")
+    protected Date modifiedDate;
 
     public Integer getIdKonsumenFinance() {
         return idKonsumenFinance;
@@ -101,6 +104,14 @@ public class ImageKonsumenFinance {
 
     public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
     
 }
