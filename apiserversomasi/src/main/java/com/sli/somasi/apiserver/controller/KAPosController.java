@@ -122,6 +122,27 @@ public class KAPosController {
         return result;
     }
     
+    @RequestMapping("/reportPerSend")
+    public Future<APIResult> reportPerSendDebitur (@QueryParam ("userId") String userId, @QueryParam("idAgent") Integer idAgent) {
+        
+        Future<APIResult> result = Future.future();
+        
+        financeService.reportSendPerDebitur(userId, idAgent)
+             .setHandler(ret -> {
+                 
+                 APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
+    
     @RequestMapping("/listnodebitur")
     public Future<APIResult> listNoDebitur(@QueryParam("userId") String userId) {
         

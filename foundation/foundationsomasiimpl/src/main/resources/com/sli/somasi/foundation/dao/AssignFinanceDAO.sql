@@ -2,13 +2,13 @@
 select af.* from somasi_mappingareakapos sm 
 left join somasi_agentpos sa on sm.cityid = sa.cityid 
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
-where sm.userid = {{userId}}
+where sm.userid = {{userId}} and af.status = 'Berhasil Terkirim'
 
 --listNoDebiturAdmin
 select af.* from somasi_mappingareadminpos sm 
 left join somasi_agentpos a on a.districtid = sm.districtid 
 left join somasi_assignfinance af on a.idagentpos = af.idagentpos 
-where sm.userid = {{userId}}
+where sm.userid = {{userId}} and af.status = 'Berhasil Terkirim'
 
 --listAllNoDebitur
 select af.* from somasi_assignfinance af
@@ -44,7 +44,17 @@ from somasi_mappingareakapos sm
 left join somasi_agentpos sa on sm.cityid = sa.cityid 
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
 left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
-where sm.userid = {{userId}}
+where sm.userid = {{userId}} and af.status is not null 
+
+--reportSendPerDebitur
+select
+af.*,
+sk.*
+from somasi_mappingareakapos sm 
+left join somasi_agentpos sa on sm.cityid = sa.cityid 
+left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
+left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
+where sm.userid = {{userId}} and af.idagentpos = {{idAgent}} and af.status is not null 
 
 --reportSendDebiturforAdmin
 select
@@ -54,11 +64,10 @@ from somasi_mappingareadminpos sm
 left join somasi_agentpos sa on sm.districtid = sa.districtid 
 left join somasi_assignfinance af on sa.idagentpos = af.idagentpos 
 left join somasi_konsumen sk on af.konsumenid = sk.konsumenid 
-where sm.userid =  {{userId}}
+where sm.userid =  {{userId}} and af.status is not null 
 
 --reportAllSendDebitur
 select
-af.*,
-sk.*
+af.*
 from somasi_assignfinance af
 left join somasi_konsumen sk on af.konsumenid = sk.konsumenid
