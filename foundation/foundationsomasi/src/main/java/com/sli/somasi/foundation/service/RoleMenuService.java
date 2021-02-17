@@ -5,10 +5,7 @@ import com.sli.somasi.foundation.dto.RoleMenu;
 import io.vertx.core.Future;
 import java.util.List;
 
-/**
- *
- * @author Abdul.Jalil.M
- */
+
 public interface RoleMenuService {
     
     Future<RoleMenu> add(RoleMenu role);

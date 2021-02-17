@@ -202,6 +202,28 @@ public class RoleController {
         return result;
     }
     
+    @RequestMapping("/menu/all")
+    public Future<APIResult> listRoleMenu() {
+        
+        Future<APIResult> result = Future.future();
+        
+        serviceMenu.listAll()
+                .setHandler(ret -> {
+                   
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded())
+                        apiResult.setResult(ret.result());
+                    else
+                        apiResult.error(Errors.COMMON, "" + ret.cause());
+                    
+                    result.complete(apiResult);
+                });
+        
+        return result;
+    }
+    
+    
     @RequestMapping("/menu/list/:id")
     public Future<APIResult> list(@PathParam("id") int id) {
         

@@ -23,10 +23,7 @@ import io.vertx.ext.web.RoutingContext;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author denny
- */
+
 @RestController("/user")
 public class UserController {
     
@@ -35,24 +32,6 @@ public class UserController {
     
     @AutoWired
     protected UserService userService;
-    
-    @RequestMapping("/test")
-    public Future<APIResult> test() {
-        
-        return Future.succeededFuture(new APIResult("Test Result"));
-    }
-    
-    @RequestMapping("/testx")
-    public Future<APIResult> testX() {
-        
-        return Future.succeededFuture(new APIResult("Test Result Protected URL"));
-    }
-    
-    @RequestMapping(value = "/testy")
-    public Future<APIResult> testY(@RequestBody String body) {
-        
-        return Future.succeededFuture(new APIResult("Test Result TestY"));
-    }
     
     @RequestMapping(value = "/login", method = HttpMethod.POST)
     public Future<APIResult> login(@RequestBody LoginRequest request) {
@@ -85,33 +64,22 @@ public class UserController {
     @RequestMapping("/byuserid/:userId")
     public Future<APIResult> get(@PathParam("userId") String userId) {
         
-        Future<APIResult> future = Future.future();
-        APIResult result = new APIResult();
+        Future<APIResult> result = Future.future();
         
-        User usr = new User();
-        usr.setUserId(userId);
-        usr.setName("Test");
-        usr.setPassword("xxx");
-        
-        result.setResult(usr);
-        
-        future.complete(result);
-                
-        /*
         userService.get(userId)
                     .setHandler(ret -> {
+                        APIResult apiResult = new APIResult();
                        
                         if (ret.succeeded()) {
                             
-                            result.setResult(ret.result());
-                            future.complete(result);
+                            apiResult.setResult(ret.result());
+                            result.complete(apiResult);
                         }
                         else
-                            future.fail(ret.cause());
+                            result.fail(ret.cause());
                     });
-        */
         
-        return future;
+        return result;
     }
     
     @RequestMapping(value = "", method = HttpMethod.POST)
