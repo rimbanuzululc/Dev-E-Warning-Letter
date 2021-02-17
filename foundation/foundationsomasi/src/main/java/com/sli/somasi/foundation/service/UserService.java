@@ -22,4 +22,5 @@ public interface UserService {
     Future<List<HakAksesDTO>> hakAkses(String userId);
     
     Future<List<User>> search(String filter, int page);
+    Future<List<User>> listAll();
 }

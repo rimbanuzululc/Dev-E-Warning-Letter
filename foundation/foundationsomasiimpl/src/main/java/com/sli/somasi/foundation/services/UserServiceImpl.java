@@ -232,6 +232,12 @@ public class UserServiceImpl implements UserService {
         return result;
     }
     
+    @Override
+    public Future<List<User>> listAll() {
+        
+        return dao.listAll();
+    }
+    
 //  percobaan update setelah commmit  
     
    

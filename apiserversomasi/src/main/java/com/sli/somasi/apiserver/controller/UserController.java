@@ -240,4 +240,25 @@ public class UserController {
                 });
         return result;
     }
+    
+    @RequestMapping("/list")
+    public Future<APIResult> listAll() {
+        
+        Future<APIResult> result = Future.future();
+        
+        userService.listAll()
+                .setHandler(ret -> {
+                   
+                    APIResult apiResult = new APIResult();
+                    
+                    if (ret.succeeded())
+                        apiResult.setResult(ret.result());
+                    else
+                        apiResult.error(ret.cause());
+                    
+                    result.complete(apiResult);
+                });
+        
+        return result;
+    }
 }

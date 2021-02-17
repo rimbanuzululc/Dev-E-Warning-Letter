@@ -6,7 +6,9 @@
 package com.sli.somasi.apiserver.controller;
 
 import com.sli.somasi.apiserver.dto.APIResult;
+import com.sli.somasi.foundation.Errors;
 import com.sli.somasi.foundation.service.CityService;
+import com.sli.somasi.foundation.service.CountryService;
 import com.sli.somasi.foundation.service.DistrictService;
 import com.sli.somasi.foundation.service.StateService;
 import com.sli.somasi.foundation.service.SubDistrcitService;
@@ -38,6 +40,9 @@ public class WilayahController {
     
     @AutoWired
     ZipcodeService zipcodeService;
+    
+    @AutoWired
+    CountryService countryService;
     
     @RequestMapping(value = "/state")
     public Future<APIResult> state () {
@@ -144,6 +149,27 @@ public class WilayahController {
                     
                     result.complete(apiResult);
                 });
+        return result;
+    }
+    
+    @RequestMapping("/country")
+    public Future<APIResult> country() {
+        
+        Future<APIResult> result = Future.future();
+        
+        countryService.listAll()
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
         return result;
     }
 }

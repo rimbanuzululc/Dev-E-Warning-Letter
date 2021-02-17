@@ -132,4 +132,9 @@ public class UserDAO extends CommonDAO {
                 });
     }
     
+    public Future<List<User>> listAll () {
+        
+        return queryScript("listAll", User.class);
+    }
+    
 }

@@ -126,5 +126,26 @@ public class MenuController {
         
         return result;
     }
+    
+    @RequestMapping("/byid/:id")
+    public Future<APIResult> getById (@PathParam ("id") int menuId) {
+        
+        Future<APIResult> result = Future.future();
+        
+        service.getId(menuId)
+            .setHandler(ret -> {
+
+                APIResult apiResult = new APIResult();
+
+                if (ret.succeeded())
+                    apiResult.setResult(ret.result());
+                else
+                    apiResult.error(Errors.COMMON, "" + ret.cause());
+
+                result.complete(apiResult);
+            });
+        
+        return result;
+    }
   
 }

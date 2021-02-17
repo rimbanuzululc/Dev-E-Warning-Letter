@@ -38,3 +38,6 @@ from somasi_role r
 where 
 usr.userid = '[[userId]]' and
 m.parentid = [[parentId]]
+
+--listAll
+select * from somasi_user
