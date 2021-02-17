@@ -103,7 +103,7 @@ public class RoleMenuDAO extends CommonDAO{
 
     public Future<List<RoleMenu>> listAll(){
         
-        return query("select * forom somasi_rolemenu", RoleMenu.class);
+        return query("select * from somasi_rolemenu", RoleMenu.class);
     }
     
     public Future<List<RoleMenu>> listByRoleId(int roleId){
