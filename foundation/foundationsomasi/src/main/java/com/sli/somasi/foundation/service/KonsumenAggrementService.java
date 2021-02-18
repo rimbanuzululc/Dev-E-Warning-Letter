@@ -11,8 +11,6 @@ import com.sli.somasi.foundation.dto.ListSomasi;
 import io.vertx.core.Future;
 import java.util.Date;
 import java.util.List;
-import javax.xml.soap.Detail;
-
 /**
  *
  * @author hp
