@@ -431,6 +431,20 @@ public class AgentPosServiceImpl implements AgentPosService{
 
     @Override
     public Future<AgentPos> edit(AgentPos agentPos) {
+        
+        String password = agentPos.getPassword();
+        
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes(),0,password.length());
+
+            String encoded = new BigInteger(1,digest.digest()).toString(16);
+            
+            agentPos.setPassword(encoded);
+        } catch (Exception e) {
+        }
+        
+        
         return dao.edit(agentPos);
     }
     
