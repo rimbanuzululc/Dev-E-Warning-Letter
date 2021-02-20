@@ -21,7 +21,6 @@ from somasi_role r
   join somasi_menu m on   m.menuid = rm.menuid
 	join somasi_user usr on usr.roleid = r.roleid
 where usr.userid = '[[userId]]'
- and m.parentid = 0
 
 --subMenu
 select 
@@ -40,4 +39,16 @@ usr.userid = '[[userId]]' and
 m.parentid = [[parentId]]
 
 --listAll
-select * from somasi_user
+select 
+su.*,
+sr."name" as roleName
+from somasi_user su 
+left join somasi_role sr on su.roleid = sr.roleid 
+
+--getById
+select 
+su.*,
+sr."name" as roleName
+from somasi_user su 
+left join somasi_role sr on su.roleid = sr.roleid 
+where userid = {{userId}}

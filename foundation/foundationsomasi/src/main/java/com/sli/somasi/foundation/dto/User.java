@@ -6,6 +6,7 @@
 package com.sli.somasi.foundation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.starlight.db.Computed;
 import io.starlight.db.Key;
 import io.starlight.db.Table;
 import java.util.Date;
@@ -34,6 +35,9 @@ public class User {
     protected Date modify;
     
     protected Boolean isActive;
+    
+    @Computed
+    protected String roleName;
     
 
     public Integer getRoleId() {
@@ -100,5 +104,13 @@ public class User {
         this.modify = modify;
     }
     
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
     
 }

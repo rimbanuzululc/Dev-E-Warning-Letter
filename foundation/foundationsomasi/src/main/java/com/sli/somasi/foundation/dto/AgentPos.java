@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Table("somasi_agentpos")
 public class AgentPos {
-    
+
     @AutoKey
     protected Integer idAgentpos;
     
@@ -45,6 +45,21 @@ public class AgentPos {
     
     @Computed
     protected List<Integer>  listMappingAreaKaPos;
+    
+    @Computed
+    protected String countryName;
+    
+    @Computed
+    protected String stateName;
+    
+    @Computed
+    protected String cityName;
+    
+    @Computed
+    protected String districtName;
+    
+    @Computed
+    protected String subDistrictName;
     
     public Integer getIdAgentpos() {
         return idAgentpos;
@@ -173,5 +188,46 @@ public class AgentPos {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+    
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getSubDistrictName() {
+        return subDistrictName;
+    }
+
+    public void setSubDistrictName(String subDistrictName) {
+        this.subDistrictName = subDistrictName;
+    }
+    
     
 }

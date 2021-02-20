@@ -9,8 +9,8 @@ import com.sli.somasi.foundation.dto.DetailDebitur;
 import com.sli.somasi.foundation.dto.KonsumenAggrement;
 import com.sli.somasi.foundation.dto.ListSomasi;
 import io.vertx.core.Future;
-import java.util.Date;
 import java.util.List;
+
 /**
  *
  * @author hp

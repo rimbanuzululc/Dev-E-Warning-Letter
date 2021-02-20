@@ -99,8 +99,22 @@ public class AgentPosServiceImpl implements AgentPosService{
                         
                         result.fail(new CodedException(Errors.ALREADY_TAKEN_ZIPCODE));
                     } else {
-
-                        result.complete(agentPos);
+                       
+                        dao.checkName(agentPos.getIdAgentpos())
+                            .setHandler(ret -> {
+                                
+                                if (ret.result() != null && ret.succeeded()) {
+                                    
+                                        agentPos.setCityName(ret.result().getCityName());
+                                        agentPos.setCountryName(ret.result().getCountryName());
+                                        agentPos.setStateName(ret.result().getStateName());
+                                        agentPos.setDistrictName(ret.result().getDistrictName());
+                                        agentPos.setSubDistrictName(ret.result().getSubDistrictName());
+                                        
+                                        result.complete(agentPos);
+                                }
+                                    
+                            });
 
                     }
                 });

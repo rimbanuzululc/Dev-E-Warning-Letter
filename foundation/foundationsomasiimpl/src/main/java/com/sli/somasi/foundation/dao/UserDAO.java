@@ -26,7 +26,13 @@ public class UserDAO extends CommonDAO {
         
         insert(user).setHandler(ret -> {
             if(ret.succeeded()){
-                result.complete(user);
+                
+                getById(ret.result().getUserId())
+                    .setHandler(ret2 -> {
+                        
+                        result.complete(ret2.result());
+                        
+                    });
             }else{
                 result.fail(ret.cause());
             }
@@ -42,7 +48,12 @@ public class UserDAO extends CommonDAO {
 //        user.setPassword(encoded);
         super.update(user).setHandler(ret -> {
             if(ret.succeeded()){
-                result.complete(user);
+                 getById(ret.result().getUserId())
+                    .setHandler(ret2 -> {
+                        
+                        result.complete(ret2.result());
+                        
+                    });
             }else{
                 result.fail(ret.cause());
             }
@@ -68,10 +79,22 @@ public class UserDAO extends CommonDAO {
     
     public Future<User> getById(String userId) {
         
-        User user = new User();
-        user.setUserId(userId);
+        Future<User> result = Future.future();
         
-        return selectOne(user);
+        queryScriptWihtParam("getById", User.class, "userId", userId)
+            .setHandler(ret -> {
+                
+                if (ret.succeeded() && ret.result() != null) {
+                    
+                    result.complete(ret.result().get(0));
+                
+                } else {
+                    result.fail(ret.cause());
+                }
+                
+            });
+        
+        return result;
     }
     
     public Future<List<User>> search(String filter, int page) {

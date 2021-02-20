@@ -87,8 +87,18 @@ public class UserServiceImpl implements UserService {
                         user.setModify(date);
                         user.setExpired(calendar.getTime());
 
-                        dao.update(user);
-                        result.complete(user);
+                        dao.update(user)
+                            .setHandler(ret2 -> {
+                                
+                                if (ret2.succeeded() && ret2.result() != null) {
+                                    result.complete(ret2.result());
+                                } else {
+                                    result.complete(null);
+                                }
+                                
+                            
+                            });
+                        
                         
                     } else
                         result.fail(new CodedException(Errors.LOGIN_USER_NOT_FOUND));

@@ -68,7 +68,19 @@ public class AgentPosDAO extends CommonDAO {
         
         super.update(agentPos).setHandler(ret -> {
             if(ret.succeeded()){
-                result.complete(agentPos);
+                
+                checkName(agentPos.getIdAgentpos())
+                        .setHandler(ret2 -> {
+                            
+                            agentPos.setCityName(ret2.result().getCityName());
+                            agentPos.setCountryName(ret2.result().getCountryName());
+                            agentPos.setStateName(ret2.result().getStateName());
+                            agentPos.setDistrictName(ret2.result().getDistrictName());
+                            agentPos.setSubDistrictName(ret2.result().getSubDistrictName());
+                            
+                            result.complete(agentPos);
+                        });
+                
             }else{
                 result.fail(ret.cause());
             }
@@ -84,10 +96,21 @@ public class AgentPosDAO extends CommonDAO {
     
     public Future<AgentPos> getById(int id){
         
-        AgentPos agentPos = new AgentPos();
-        agentPos.setIdAgentpos(id);
+        Future<AgentPos> result = Future.future();
         
-        return selectOne(agentPos);
+        queryScriptWihtParam("getById", AgentPos.class, "id", id)
+            .setHandler(ret -> {
+                
+                if (ret.result() != null && ret.succeeded()) {
+                    
+                    result.complete(ret.result().get(0));
+                } else {
+                    result.fail(ret.cause());
+                }   
+                
+            });
+        
+        return result;
     }
     
     public Future<AgentPos> update (AgentPos agentPos) {
@@ -191,7 +214,7 @@ public class AgentPosDAO extends CommonDAO {
         queryScriptWihtParam("getByUsername", AgentPos.class , "username", username)
                 .setHandler(ret -> {
                     
-                    if (ret.succeeded()) {
+                    if (ret.succeeded() && ret.result() != null) {
                         result.complete(ret.result().get(0));
                     } else {
                         result.complete(ret.result().get(0));
@@ -303,6 +326,23 @@ public class AgentPosDAO extends CommonDAO {
         String no = otp.getNoDebitur();
         
         queryScriptWihtParam("validOtp", OTP.class, "id", id, "no", no)
+                .setHandler(ret ->{
+                    
+                    if (ret.result().size() > 0) {
+                        result.complete(ret.result().get(0));
+                        
+                    } else {
+                        result.fail(ret.cause());
+                    }
+                
+                });
+        return result;
+    }
+    
+    public Future<AgentPos> checkName (Integer agent) {
+        
+        Future<AgentPos> result = Future.future();
+        queryScriptWihtParam("checkName", AgentPos.class, "id",agent)
                 .setHandler(ret ->{
                     
                     if (ret.result().size() > 0) {
